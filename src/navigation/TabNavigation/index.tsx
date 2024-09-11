@@ -1,32 +1,17 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { Image, TouchableOpacity, View, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { UserContext } from "../../context/user/UserContext";
-import HomeScreen from "../../screen/home/HomeScreen";
-import HomeIcon from '../../assets/svg/tab/Home.svg';
-import PriviligeIcon from '../../assets/svg/tab/Membership Card.svg';
-import HistoryIcon from '../../assets/svg/tab/Order History.svg';
-import AccountIcon from '../../assets/svg/tab/Test Account.svg';
 import { palette } from "../../theme/themes";
 import { FONT } from "../../theme/fonts";
-import History from "../../screen/transaction/valetParking/History";
-import ProfileScreen from "../../screen/profile/ProfileScreen";
-import PrivilegeScreen from "../../screen/privilege/PrivilegeScreen";
+import SplashScreen from "../../screens/splashScreen/SplashScreen";
 
 const Tab = createBottomTabNavigator();
 
 export const RenderTabNavigation = () => {
     const userContext = React.useContext(UserContext);
 
-    // const CustomTabBarButton = ({ onPress }) => (
-    //     <TouchableOpacity onPress={onPress} style={styles.middleButtonContainer}>
-    //         <Image
-    //             source={require('../../assets/bottomtab/middle-img.png')}
-    //             style={styles.middleButtonImage}
-    //         />
-    //     </TouchableOpacity>
-    // );
-
+ 
     return (
         <Tab.Navigator
             initialRouteName="Home"
@@ -51,56 +36,13 @@ export const RenderTabNavigation = () => {
                 headerShown: false,
                 tabBarShowLabel: true,
                 tabBarLabelStyle: styles.lableSty,
-                tabBarIcon: ({ focused }) => {
-                    let IconComponent;
-
-                    if (route.name === "Home") {
-                        IconComponent = focused ?
-                            <View style={styles.activeIconContainer}>
-                                <Image
-                                    source={require('../../assets/bottomtab/middle-img.png')}
-                                    style={styles.middleButtonImage}
-                                />
-                            </View>
-                            : <HomeIcon width={26} height={26} />;
-                    } else if (route.name === "Privileges") {
-                        IconComponent = focused ?
-                            <View style={styles.activeIconContainer}>
-                                <Image
-                                    source={require('../../assets/bottomtab/middle-img.png')}
-                                    style={styles.middleButtonImage}
-                                />
-                            </View>
-                            : <PriviligeIcon width={26} height={39} />;
-
-                    } else if (route.name === "History") {
-                        IconComponent = focused ?
-                            <View style={styles.activeIconContainer}>
-                                <Image
-                                    source={require('../../assets/bottomtab/middle-img.png')}
-                                    style={styles.middleButtonImage}
-                                />
-                            </View>
-                            : <HistoryIcon width={26} height={39} />;
-                    } else if (route.name === "Profile") {
-                        IconComponent = focused ?
-                            <View style={styles.activeIconContainer}>
-                                <Image
-                                    source={require('../../assets/bottomtab/middle-img.png')}
-                                    style={styles.middleButtonImage}
-                                />
-                            </View>
-                            : <AccountIcon width={26} height={26} />;
-                    }
-
-                    return IconComponent;
-                },
+               
             })}
         >
-            <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen name="Privileges" component={PrivilegeScreen} />
-            <Tab.Screen name="History" component={History} />
-            <Tab.Screen name="Profile" component={ProfileScreen} />
+            <Tab.Screen name="Home" component={SplashScreen} />
+            <Tab.Screen name="Privileges" component={SplashScreen} />
+            <Tab.Screen name="History" component={SplashScreen} />
+            <Tab.Screen name="Profile" component={SplashScreen} />
         </Tab.Navigator>
     );
 };

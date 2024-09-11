@@ -1,10 +1,14 @@
 
 export const palette = {
-  primaryDark: "#000",
-  primaryLight: "#FFF",
+  primaryDark: "#1a4d25",
+  primaryLight: "#648567",
+  white: "#FFF",
+  black: "#000",
+
+
 
   txtInputBg: "#1B1B1B",
-  bgCard: "#1F1F1F",
+  bgCard: "#cedbcf",
   txtGray: "#999999",
   bgGray: "#1F1F1F",
 
