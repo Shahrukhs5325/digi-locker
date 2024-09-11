@@ -28,15 +28,20 @@ const SecondaryButton: React.FC<Props> = ({
 
     return (
         <Button
-            buttonColor={buttonColor === "light" ? palette.txtWhite : userContext?.customTheme?.primaryDark}
-            textColor={buttonColor === "light" ? userContext?.customTheme?.primaryDark : palette.txtWhite}
             icon={icon}
-            mode={"outlined"}
+            mode={"contained"}
             loading={loading}
-            //disabled={disabled}
-            uppercase={false}
-            onPress={() => { loading ? console.log("disable") : onPress() }}
-            style={{ borderRadius: 10, height: 52, justifyContent: 'center', borderColor: palette.txtWhite, borderWidth: 1, }}
+            disabled={disabled}
+            uppercase={uppercase ? true : false}
+            onPress={() => onPress()}
+            style={{
+                borderRadius: 6, height: 52, justifyContent: 'center',
+                borderColor: palette.primaryDark,
+                borderWidth: 1,
+            }}
+            buttonColor={palette.txtWhite}
+            textColor={palette.primaryDark}
+
         >
             {children}
         </Button>

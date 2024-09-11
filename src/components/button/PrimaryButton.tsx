@@ -24,21 +24,17 @@ const PrimaryButton: React.FC<Props> = ({
 }) => {
 
     return (
+
         <Button
+            buttonColor={palette.primaryDark}
+            textColor={palette.white}
             icon={icon}
             mode={"contained"}
             loading={loading}
             disabled={disabled}
             uppercase={uppercase ? true : false}
-            onPress={() => onPress()}
-            style={{
-                borderRadius: 6, height: 52, justifyContent: 'center',
-                borderColor: palette.primaryDark,
-                borderWidth: 1,
-            }}
-            buttonColor={palette.txtWhite}
-            textColor={palette.primaryDark}
-
+            onPress={() => { loading ? console.log("disable") : onPress() }}
+            style={{ borderRadius: 10, height: 52, justifyContent: 'center', borderColor: palette.txtWhite, borderWidth: 1, }}
         >
             {children}
         </Button>
