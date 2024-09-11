@@ -4,7 +4,6 @@ import { StyleSheet } from "react-native";
 import { UserContext } from "../../context/user/UserContext";
 import { palette } from "../../theme/themes";
 import { FONT } from "../../theme/fonts";
-import SplashScreen from "../../screens/splashScreen/SplashScreen";
 import HomeScreen from "../../screens/home/HomeScreen";
 
 const Tab = createBottomTabNavigator();
@@ -12,7 +11,7 @@ const Tab = createBottomTabNavigator();
 export const RenderTabNavigation = () => {
     const userContext = React.useContext(UserContext);
 
- 
+
     return (
         <Tab.Navigator
             initialRouteName="Home"
@@ -37,13 +36,13 @@ export const RenderTabNavigation = () => {
                 headerShown: false,
                 tabBarShowLabel: true,
                 tabBarLabelStyle: styles.lableSty,
-               
+
             })}
         >
             <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen name="Privileges" component={SplashScreen} />
-            <Tab.Screen name="History" component={SplashScreen} />
-            <Tab.Screen name="Profile" component={SplashScreen} />
+            <Tab.Screen name="Search" component={HomeScreen} />
+            <Tab.Screen name="Issued" component={HomeScreen} />
+            <Tab.Screen name="Account" component={HomeScreen} />
         </Tab.Navigator>
     );
 };

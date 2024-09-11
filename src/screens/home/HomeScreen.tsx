@@ -38,7 +38,7 @@ const HomeScreen: React.FC<Props> = () => {
     <>
       <View style={{
         flex: 1,
-        backgroundColor: userContext?.customTheme?.primaryDark,
+        backgroundColor: palette.white,
       }}>
 
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -69,16 +69,15 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   compView: {
-    padding: 10,
+    padding: 16,
     gap: 26,
-    marginTop: ImageHeight + 10,
-    marginBottom: 30
+
   },
   txtTitleSty: {
     fontFamily: FONT.JuliusSansOne.regular,
     fontSize: 16,
     fontWeight: '400',
-    color: palette.txtWhite,
+    color: palette.black,
     textTransform: 'uppercase',
     letterSpacing: 3,
     paddingBottom: 12
