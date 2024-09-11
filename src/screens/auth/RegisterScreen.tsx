@@ -262,84 +262,93 @@ const RegisterScreen: React.FC<Props> = () => {
             animated={true}
             backgroundColor={palette.primaryDark}
           />
+          {!isSentOTP ? <>
+            <Text style={styles.txtSty}>SIGN UP</Text>
+            <View style={{ gap: 10 }}>
+              <TextInputCust
+                placeholder='First name'
+                value={formData.firstName}
+                onChangeText={value => {
+                  setFormData({ ...formData, firstName: value });
+                  setErrors("");
+                }}
+              />
+              <TextInputCust
+                placeholder='Last name'
+                value={formData.LastName}
+                onChangeText={value => {
+                  setFormData({ ...formData, LastName: value });
+                  setErrors("");
+                }}
+              />
+              <TextInputCust
+                placeholder='Email'
+                value={formData.email}
+                onChangeText={value => {
+                  setFormData({ ...formData, email: value });
+                  setErrors("");
+                }}
+              />
+              <TextInputCust
+                placeholder='Mobile number'
+                value={formData.mobileNo}
+                onChangeText={value => {
+                  setFormData({ ...formData, mobileNo: value });
+                  setErrors("");
+                }}
+              />
+              <TextInputCust
+                placeholder='Password'
+                value={formData.password}
+                onChangeText={value => {
+                  setFormData({ ...formData, password: value });
+                  setErrors("");
+                }}
+                secureTextEntry={false}
+                right={<TextInputCust.Icon icon="eye" />}
+              />
 
-          <Text style={styles.txtSty}>SIGN UP</Text>
-          <View style={{ gap: 10 }}>
-            <TextInputCust
-              placeholder='First name'
-              value={formData.firstName}
-              onChangeText={value => {
-                setFormData({ ...formData, firstName: value });
-                setErrors("");
-              }}
-            />
-            <TextInputCust
-              placeholder='Last name'
-              value={formData.LastName}
-              onChangeText={value => {
-                setFormData({ ...formData, LastName: value });
-                setErrors("");
-              }}
-            />
-            <TextInputCust
-              placeholder='Email'
-              value={formData.email}
-              onChangeText={value => {
-                setFormData({ ...formData, email: value });
-                setErrors("");
-              }}
-            />
-            <TextInputCust
-              placeholder='Mobile number'
-              value={formData.mobileNo}
-              onChangeText={value => {
-                setFormData({ ...formData, mobileNo: value });
-                setErrors("");
-              }}
-            />
-            <TextInputCust
-              placeholder='Password'
-              value={formData.password}
-              onChangeText={value => {
-                setFormData({ ...formData, password: value });
-                setErrors("");
-              }}
-              secureTextEntry={false}
-              right={<TextInputCust.Icon icon="eye" />}
-            />
+              <Text style={{ color: 'red', fontSize: 13 }}>{errors}</Text>
 
-            <Text style={{ color: 'red', fontSize: 13 }}>{errors}</Text>
+            </View>
 
-          </View>
-
-
-          <View style={{ gap: 8 }}>
-
-            {!isSentOTP ? <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', }}>
               <Checkbox.Item
                 status={isTerm ? "checked" : "unchecked"}
                 onPress={() => setIsTerm(!isTerm)}
                 uncheckedColor={palette.black}
+                color={palette.primaryDark}
                 labelStyle={styles.txtTextTitle}
+                label='I accept the Terms & Conditions'
+                position='leading'
               />
-              <View style={{ marginBottom: 10, }}>
-                <Text style={styles.txtTerm} >I accept the Terms & Conditions</Text>
-                <Text style={[styles.txtTerm, { textDecorationLine: 'underline' }]}>Privacy Policy</Text>
+              {/* <Text style={styles.txtTerm} >I accept the</Text> */}
+              {/* <Text style={[styles.txtTerm, { textDecorationLine: 'underline' }]}>Terms & Conditions </Text>
+              <Text style={[styles.txtTerm, { textDecorationLine: 'underline' }]}>Privacy Policy</Text> */}
+            </View>
+
+            <PrimaryButton disabled={!isTerm || isLoading} loading={isLoading} onPress={() => submitHandler()}>Send OTP</PrimaryButton>
+
+            <View style={styles.containerRegister}>
+              <TouchableOpacity onPress={() => navigation.replace("LoginScreen")}>
+                <Text style={styles.txtSingIn}>Already have an account? Sign in</Text>
+              </TouchableOpacity>
+            </View>
+          </>
+            :
+            <>
+              <Text style={styles.txtSty}>SIGN UP</Text>
+              <View style={{ gap: 10 }}>
+                <TextInputCust
+                  placeholder='First name'
+                  value={formData.firstName}
+                  onChangeText={value => {
+                    setFormData({ ...formData, firstName: value });
+                    setErrors("");
+                  }}
+                />
               </View>
-            </View> : null}
-
-            {!isSentOTP ?
-              <PrimaryButton disabled={!isTerm || isLoading} loading={isLoading} onPress={() => submitHandler()}>Send OTP</PrimaryButton> :
-              <PrimaryButton disabled={isLoading} loading={isLoading} onPress={() => confirmSignUpHandler()}>Register</PrimaryButton>
-            }
-          </View>
-
-          <View style={styles.containerRegister}>
-            <TouchableOpacity onPress={() => navigation.replace("LoginScreen")}>
-              <Text style={styles.txtSingIn}>Already have an account? Sign in</Text>
-            </TouchableOpacity>
-          </View>
-
+            </>}
         </View>
       </ScrollView>
       <Snackbar
@@ -394,7 +403,6 @@ const styles = StyleSheet.create({
     color: palette.black,
     fontSize: 16,
     fontWeight: '400',
-    textAlign: 'center',
   },
   txtSingIn: {
     textAlign: 'center',
