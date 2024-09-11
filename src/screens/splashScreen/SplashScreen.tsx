@@ -5,6 +5,7 @@ import { palette } from '../../theme/themes';
 import { UserContext } from '../../context/user/UserContext';
 import { Text } from 'react-native-paper';
 import { FONT } from '../../theme/fonts';
+import { Auth } from 'aws-amplify';
 
 type Props = {};
 
@@ -34,14 +35,29 @@ const SplashScreen: React.FC<Props> = () => {
 
   const timerSpalshFunction = () => {
     const timerId = setTimeout(() => {
-      setIsLogoSpalsh(true);
-      navigation.navigate('LoginScreen');
+      checkCustomerLogin();
+
     }, 3000);
 
     return () => clearTimeout(timerId);
   }
 
 
+  const checkCustomerLogin = async () => {
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      if (user && user?.username) {
+        const customerId = user?.attributes?.["custom:customerId"];
+        console.log('****** autoSignIn ', customerId);
+        navigation.replace('HomeScreen');
+
+      }
+    } catch (error) {
+      console.log('Error: ' + JSON.stringify(error));
+      navigation.replace("LoginScreen");
+      // timerFunction();
+    }
+  };
 
   return (
     <>
@@ -54,7 +70,7 @@ const SplashScreen: React.FC<Props> = () => {
         <View style={styles.container}>
           <View style={styles.containerLogo}>
             <Text style={styles.txtBrand}>Powered by</Text>
-
+            <Text style={styles.txtBrand}>EzyGen</Text>
           </View>
         </View>
 

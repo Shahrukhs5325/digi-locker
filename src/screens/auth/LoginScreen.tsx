@@ -142,12 +142,13 @@ const LoginScreen: React.FC<Props> = () => {
           <Text style={styles.txtforgtPass}>Forgot password?</Text>
         </View>
         <View >
-          <TouchableOpacity onPress={() => navigation.replace("RegisterScreen")}>
+          <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")}>
             <Text style={styles.txtRegister}>Don’t have an account? Sign up</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.containerLogo}>
           <Text style={styles.txtBrand}>Powered by</Text>
+          <Text style={styles.txtforgtPass}>EzyGen</Text>
           {/* <ZapsLogo /> */}
         </View>
 

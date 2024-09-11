@@ -33,7 +33,7 @@ const RegisterScreen: React.FC<Props> = () => {
     LastName: '',
     email: '',
     password: '',
-    activationCode: '',
+    mobileNo: '',
     lastSixDigit: '',
     firstFourDigit: '',
     creditCardName: '',
@@ -76,7 +76,7 @@ const RegisterScreen: React.FC<Props> = () => {
     } else if (!formData.password || !isPassValid) {
       setErrors("Password with 8 characters including 1 uppercase letter, 1 special character, and alphanumeric characters");
       return false;
-    } else if (!formData?.activationCode) {
+    } else if (!formData?.mobileNo) {
       setErrors("Please enter activation code");
       return false;
     } else if (!formData?.creditCardName) {
@@ -97,28 +97,9 @@ const RegisterScreen: React.FC<Props> = () => {
 
   const submitHandler = () => {
     const val = validate()
-    val && getStatusHandler();
-    // val && signUpSubmit();
+
   }
 
-  const getStatusHandler = async () => {
-    try {
-      const res = await getActivationCodeDetails(formData.activationCode);
-
-      if (res?.status === 200 && res?.data?.data) {
-        if (res?.data?.data?.redeemed) {
-          setErrors("Activation code used");
-        } else {
-          signUpSubmit();
-        }
-      } else {
-        setErrors("Enter valid activation code");
-      }
-    } catch (err) {
-      setErrors("Enter valid activation code");
-      console.log('error fetchCountries : ', err);
-    }
-  }
 
 
   const signUpSubmit = async () => {
@@ -209,7 +190,7 @@ const RegisterScreen: React.FC<Props> = () => {
         errorMsg: "",
         userName: user?.username,
         binNumber: formData?.lastSixDigit,
-        activationCode: formData?.activationCode,
+        mobileNo: formData?.mobileNo,
         newCustomer: true,
         deleteRequest: false,
         deletionDateTime: 0,
@@ -283,7 +264,7 @@ const RegisterScreen: React.FC<Props> = () => {
           />
 
           <Text style={styles.txtSty}>SIGN UP</Text>
-          <View style={{ gap: 0 }}>
+          <View style={{ gap: 10 }}>
             <TextInputCust
               placeholder='First name'
               value={formData.firstName}
@@ -309,6 +290,14 @@ const RegisterScreen: React.FC<Props> = () => {
               }}
             />
             <TextInputCust
+              placeholder='Mobile number'
+              value={formData.mobileNo}
+              onChangeText={value => {
+                setFormData({ ...formData, mobileNo: value });
+                setErrors("");
+              }}
+            />
+            <TextInputCust
               placeholder='Password'
               value={formData.password}
               onChangeText={value => {
@@ -318,81 +307,13 @@ const RegisterScreen: React.FC<Props> = () => {
               secureTextEntry={false}
               right={<TextInputCust.Icon icon="eye" />}
             />
-            <TextInputCust
-              placeholder='Activation code'
-              value={formData.activationCode}
-              onChangeText={value => {
-                setFormData({ ...formData, activationCode: value });
-                setErrors("");
-              }}
-            />
+
+            <Text style={{ color: 'red', fontSize: 13 }}>{errors}</Text>
 
           </View>
-          <View style={{ gap: 8, marginTop: 10 }}>
-            <Text style={styles.txtCreditCardTitle} >Credit card details</Text>
 
-            {/* <View>
-              <Checkbox.Item label="Card name as per user"
-                // disabled={!formData.firstName && !formData.LastName}
-                status={isNameAsPer ? "checked" : "unchecked"}
-                onPress={() => setIsNameAsPer(!isNameAsPer)}
-                color={palette.black}
-                uncheckedColor={palette.black}
-                labelStyle={styles.txtTextTitle}
-                style={{ marginLeft: -15, marginVertical: -2, }}
-              />
-            </View> */}
-            <View style={{ gap: 4 }}>
-              <Text style={styles.txtTextTitle} >Enter card holder name</Text>
-              <TextInputCust
-                placeholder='Card holder name'
-                value={formData.creditCardName}
-                onChangeText={value => {
-                  setFormData({ ...formData, creditCardName: value });
-                  setErrors("");
-                }}
-              />
-            </View>
-            <View style={{ gap: 4 }}>
-              <Text style={styles.txtTextTitle} >Enter first 6 digits</Text>
-              <TextInputCust
-                placeholder='x x x x x x'
-                value={formData.lastSixDigit}
-                onChangeText={value => {
-                  setFormData({ ...formData, lastSixDigit: value });
-                  setErrors("");
-                }}
-              />
-            </View>
-            <View style={{ gap: 4 }}>
-              <Text style={styles.txtTextTitle} >Enter last 4 digits</Text>
-              <TextInputCust
-                placeholder='x x x x'
-                value={formData.firstFourDigit}
-                onChangeText={value => {
-                  setFormData({ ...formData, firstFourDigit: value });
-                  setErrors("");
-                }}
-              />
-            </View>
-
-            {isSentOTP ? <View style={{ gap: 4 }}>
-              <Text style={styles.txtTextTitle} >Enter OTP</Text>
-              <TextInputCust
-                placeholder='OTP'
-                value={otp}
-                keyboardType={"numeric"}
-                onChangeText={value => {
-                  setOTP(value);
-                  setErrors("");
-                }}
-              />
-            </View> : null}
-
-          </View>
 
           <View style={{ gap: 8 }}>
-            <Text style={{ color: 'red', fontSize: 13 }}>{errors}</Text>
 
             {!isSentOTP ? <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}>
               <Checkbox.Item

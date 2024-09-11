@@ -5,6 +5,7 @@ import { UserContext } from "../../context/user/UserContext";
 import { palette } from "../../theme/themes";
 import { FONT } from "../../theme/fonts";
 import SplashScreen from "../../screens/splashScreen/SplashScreen";
+import HomeScreen from "../../screens/home/HomeScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -39,7 +40,7 @@ export const RenderTabNavigation = () => {
                
             })}
         >
-            <Tab.Screen name="Home" component={SplashScreen} />
+            <Tab.Screen name="Home" component={HomeScreen} />
             <Tab.Screen name="Privileges" component={SplashScreen} />
             <Tab.Screen name="History" component={SplashScreen} />
             <Tab.Screen name="Profile" component={SplashScreen} />
