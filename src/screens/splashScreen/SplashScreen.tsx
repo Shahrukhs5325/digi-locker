@@ -35,6 +35,7 @@ const SplashScreen: React.FC<Props> = () => {
   const timerSpalshFunction = () => {
     const timerId = setTimeout(() => {
       setIsLogoSpalsh(true);
+      navigation.navigate('LoginScreen');
     }, 3000);
 
     return () => clearTimeout(timerId);

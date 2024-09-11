@@ -4,6 +4,8 @@ import React from "react";
 import { UserContext } from "../../context/user/UserContext";
 import SplashScreen from "../../screens/splashScreen/SplashScreen";
 import { palette } from "../../theme/themes";
+import LoginScreen from "../../screens/auth/LoginScreen";
+import RegisterScreen from "../../screens/auth/RegisterScreen";
  
 
 const Stack = createStackNavigator();
@@ -28,6 +30,14 @@ const Navigation = () => {
         <Stack.Screen
           name={"SplashScreen"}
           component={SplashScreen}
+        />
+         <Stack.Screen
+          name={"LoginScreen"}
+          component={LoginScreen}
+        />
+         <Stack.Screen
+          name={"RegisterScreen"}
+          component={RegisterScreen}
         />
          
 

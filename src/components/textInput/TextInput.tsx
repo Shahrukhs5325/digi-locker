@@ -34,15 +34,15 @@ const TextInputCust: React.FC<Props> = ({
             mode='outlined'
             value={value}
             error={error}
-            textColor={palette.txtWhite}
+            // textColor={palette.txtWhite}
             disabled={disabled}
             keyboardType={keyboardType}
             secureTextEntry={secureTextEntry}
             onChangeText={onChangeText}
-            style={{ borderWidth: 0, backgroundColor: palette.txtInputBg, borderRadius: 10 }}
+            // style={{ borderWidth: 1,  borderRadius: 10 }}
             outlineStyle={{ borderWidth: 0 }}
             right={right}
-            placeholderTextColor={palette.txtGray}
+        // placeholderTextColor={palette.txtGray}
 
 
         />

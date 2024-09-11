@@ -12,36 +12,32 @@ interface Props {
     icon?: string;
     loading?: boolean | undefined;
     uppercase?: boolean | undefined;
-    buttonColor?: string | undefined;
 }
 
 const PrimaryButton: React.FC<Props> = ({
     children,
     onPress,
-    mode,
     disabled,
     uppercase,
     icon,
     loading,
-    buttonColor,
 }) => {
-    const userContext = React.useContext(UserContext);
 
     return (
         <Button
             icon={icon}
             mode={"contained"}
             loading={loading}
-            // disabled={disabled}
-            uppercase={false}
-            onPress={() => { loading ? console.log("disable") : onPress() }}
+            disabled={disabled}
+            uppercase={uppercase ? true : false}
+            onPress={() => onPress()}
             style={{
-                borderRadius: 10, height: 52, justifyContent: 'center',
-                borderColor: buttonColor === "dark" ? userContext?.customTheme?.txtWhite : palette.primaryDark,
+                borderRadius: 6, height: 52, justifyContent: 'center',
+                borderColor: palette.primaryDark,
                 borderWidth: 1,
             }}
-            buttonColor={buttonColor === "dark" ? userContext?.customTheme?.primaryDark : palette.txtWhite}
-            textColor={buttonColor === "dark" ? palette.txtWhite : palette.primaryDark}
+            buttonColor={palette.txtWhite}
+            textColor={palette.primaryDark}
 
         >
             {children}
