@@ -5,6 +5,7 @@ import { UserContext } from "../../context/user/UserContext";
 import { palette } from "../../theme/themes";
 import { FONT } from "../../theme/fonts";
 import HomeScreen from "../../screens/home/HomeScreen";
+import AccountScreen from "../../screens/account/AccountScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -42,7 +43,7 @@ export const RenderTabNavigation = () => {
             <Tab.Screen name="Home" component={HomeScreen} />
             <Tab.Screen name="Search" component={HomeScreen} />
             <Tab.Screen name="Issued" component={HomeScreen} />
-            <Tab.Screen name="Account" component={HomeScreen} />
+            <Tab.Screen name="Account" component={AccountScreen} />
         </Tab.Navigator>
     );
 };
