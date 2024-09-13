@@ -6,6 +6,8 @@ import { palette } from "../../theme/themes";
 import { FONT } from "../../theme/fonts";
 import HomeScreen from "../../screens/home/HomeScreen";
 import AccountScreen from "../../screens/account/AccountScreen";
+import IssuedScreen from "../../screens/issued/IssuedScreen";
+import SharedScreen from "../../screens/shared/SharedScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -34,15 +36,15 @@ export const RenderTabNavigation = () => {
                     shadowRadius: 5.62,
                     elevation: 7,
                 },
-                headerShown: false,
+                // headerShown: false,
                 tabBarShowLabel: true,
                 tabBarLabelStyle: styles.lableSty,
 
             })}
         >
             <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen name="Search" component={HomeScreen} />
-            <Tab.Screen name="Issued" component={HomeScreen} />
+            <Tab.Screen name="Issued" component={IssuedScreen} />
+            <Tab.Screen name="Shared" component={SharedScreen} />
             <Tab.Screen name="Account" component={AccountScreen} />
         </Tab.Navigator>
     );

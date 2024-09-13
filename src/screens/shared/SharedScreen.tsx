@@ -1,16 +1,18 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { UserContext } from '../../context/user/UserContext';
 import { FONT } from '../../theme/fonts';
 import { palette } from '../../theme/themes';
+import { DOC_LIST } from '../../constant/constant';
+import SharedDocItem from '../../components/doc/SharedDocItem';
 
 type Props = {};
 
 
 
-const HomeScreen: React.FC<Props> = () => {
+const SharedScreen: React.FC<Props> = () => {
   const navigation = useNavigation();
   const userContext = React.useContext(UserContext);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -21,7 +23,20 @@ const HomeScreen: React.FC<Props> = () => {
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View>
-            <Text style={styles.txtTitleSty}>Home Screen</Text>
+            <Text style={styles.txtTitleSty}>Shared Documents</Text>
+          </View>
+
+          <View>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              keyExtractor={(item, index) => index.toString()}
+              data={DOC_LIST}
+              renderItem={({ item }) =>
+                <SharedDocItem item={item} />
+              }
+              style={styles.listContents}
+              contentContainerStyle={styles.list}
+            />
           </View>
 
         </ScrollView>
@@ -30,7 +45,7 @@ const HomeScreen: React.FC<Props> = () => {
   );
 };
 
-export default HomeScreen;
+export default SharedScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -43,6 +58,13 @@ const styles = StyleSheet.create({
     color: palette.black,
     letterSpacing: 2,
   },
+  list: {
+    gap: 16
+  },
+  listContents: {
+    marginVertical: 16
+
+  }
 
 
 
