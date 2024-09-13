@@ -1,87 +1,110 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { StyleSheet } from "react-native";
-import { UserContext } from "../../context/user/UserContext";
-import { palette } from "../../theme/themes";
-import { FONT } from "../../theme/fonts";
-import HomeScreen from "../../screens/home/HomeScreen";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import AccountScreen from "../../screens/account/AccountScreen";
+import HomeScreen from "../../screens/home/HomeScreen";
 import IssuedScreen from "../../screens/issued/IssuedScreen";
 import SharedScreen from "../../screens/shared/SharedScreen";
+import { FONT } from "../../theme/fonts";
+import { palette } from "../../theme/themes";
+
+import Feather from 'react-native-vector-icons/Feather';
+import Octicons from 'react-native-vector-icons/Octicons';
+
+
+
 
 const Tab = createBottomTabNavigator();
 
+
+
 export const RenderTabNavigation = () => {
-    const userContext = React.useContext(UserContext);
 
 
     return (
         <Tab.Navigator
-            initialRouteName="Home"
-            screenOptions={({ route }) => ({
+            initialRouteName="MarketPlace"
+            screenOptions={() => ({
+
                 tabBarStyle: {
-                    paddingHorizontal: 14,
-                    backgroundColor: userContext?.customTheme?.bgCard,
-                    borderColor: userContext?.customTheme?.bgCard,
-                    marginTop: -20,
-                    borderTopRightRadius: 20,
-                    borderTopLeftRadius: 20,
-                    height: 64,
-                    shadowColor: "#FFF",
+                    paddingBottom: 5, paddingTop: 5,
+                    // borderTopRightRadius: 20,
+                    //  borderTopLeftRadius: 20,
+                    // shadowColor: '#54336E24',
+                    // boxShadow: "0px -4px 12px 0px #54336E24",
+                    // shadowOpacity: 4,
+                    height: 60,
+
+                    shadowColor: "#000000",
                     shadowOffset: {
                         width: 0,
                         height: 5,
                     },
                     shadowOpacity: 0.20,
                     shadowRadius: 5.62,
-                    elevation: 7,
+                    elevation: 7
                 },
-                // headerShown: false,
-                tabBarShowLabel: true,
-                tabBarLabelStyle: styles.lableSty,
+                headerShown: false,
+                tabBarActiveTintColor: palette.primaryDark,
+                tabBarInactiveTintColor: palette.primaryLight,
 
             })}
+
         >
-            <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen name="Issued" component={IssuedScreen} />
-            <Tab.Screen name="Shared" component={SharedScreen} />
-            <Tab.Screen name="Account" component={AccountScreen} />
+
+            <Tab.Screen
+                name={"Home"}
+                component={HomeScreen}
+                options={{
+                    tabBarLabel: "Home",
+                    tabBarLabelStyle: { fontWeight: "600", fontFamily: FONT.Able.bold },
+                    tabBarIcon: ({ color }) => (
+                        <Feather name={"home"} size={28} color={color} />
+                    ),
+                }}
+            />
+
+
+
+            <Tab.Screen
+                name={"IssuedScreen"}
+                component={IssuedScreen}
+                options={{
+                    tabBarLabel: "Issued",
+                    tabBarLabelStyle: { fontWeight: "600", fontFamily: FONT.Able.bold },
+                    tabBarIcon: ({ color }) => (
+                        <Octicons name={"verified"} size={28} color={color} />
+                    ),
+                }}
+            />
+
+
+
+            <Tab.Screen
+                name={"SharedScreen"}
+                component={SharedScreen}
+                options={{
+                    tabBarLabel: "Shared",
+                    tabBarLabelStyle: { fontWeight: "600", fontFamily: FONT.Able.bold },
+                    tabBarIcon: ({ color }) => (
+                        <Feather name={"share-2"} size={28} color={color} />
+                    ),
+                }}
+            />
+
+            <Tab.Screen
+                name={"AccountScreen"}
+                component={AccountScreen}
+                options={{
+                    tabBarLabel: "Account",
+                    tabBarLabelStyle: { fontWeight: "600", fontFamily: FONT.Able.bold },
+                    tabBarIcon: ({ color }) => (
+                        <Feather name={"user"} size={28} color={color} />
+                    ),
+                }}
+            />
+
+
         </Tab.Navigator>
     );
 };
-
-const styles = StyleSheet.create({
-    activeIconContainer: {
-        backgroundColor: palette.bgCard,
-        width: 78,
-        height: 74,
-        borderRadius: 90,
-        alignItems: 'center',
-        justifyContent: 'center',
-        top: -6, // This will lift the active icon above others
-        // shadowColor: '#5C8374',
-        // shadowOffset: { width: 0, height: 10 },
-        // shadowOpacity: 0.3,
-        // shadowRadius: 10,
-        // elevation: 1,
-    },
-    middleButtonContainer: {
-        top: -2,
-        width: 105,
-        height: 100,
-        borderRadius: 90,
-        alignItems: 'center',
-        paddingTop: 14,
-    },
-    middleButtonImage: {
-        width: 48,
-        height: 48,
-    },
-    lableSty: {
-        fontFamily: FONT.JuliusSansOne.regular,
-        color: palette.txtWhite,
-        fontSize: 12,
-        fontWeight: '400',
-        paddingBottom: 4
-    }
-});
