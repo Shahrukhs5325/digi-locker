@@ -10,11 +10,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 const IssuedDocItem: React.FC<any> = ({ item }) => {
     const userContext = React.useContext(UserContext);
-    const isCorporateUser = userContext?.user?.corporateCustomer;
-
-
-
-
 
 
     return (

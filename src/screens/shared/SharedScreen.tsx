@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   txtTitleSty: {
     fontFamily: FONT.Able.regular,
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '700',
     color: palette.black,
     letterSpacing: 2,
