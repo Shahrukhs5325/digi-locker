@@ -1,10 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { Text } from 'react-native-paper';
+import { FAB, Text } from 'react-native-paper';
 import { UserContext } from '../../context/user/UserContext';
 import { FONT } from '../../theme/fonts';
 import { palette } from '../../theme/themes';
+import FileAddBtn from '../../components/button/FileAddBtn';
 
 type Props = {};
 
@@ -25,6 +26,8 @@ const HomeScreen: React.FC<Props> = () => {
           </View>
 
         </ScrollView>
+
+        <FileAddBtn onPress={() => console.log()} />
       </View>
     </>
   );
@@ -34,6 +37,7 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     margin: 16,
   },
   txtTitleSty: {
@@ -43,6 +47,7 @@ const styles = StyleSheet.create({
     color: palette.black,
     letterSpacing: 2,
   },
+
 
 
 

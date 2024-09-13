@@ -7,6 +7,7 @@ import { FONT } from '../../theme/fonts';
 import { palette } from '../../theme/themes';
 import { DOC_LIST } from '../../constant/constant';
 import SharedDocItem from '../../components/doc/SharedDocItem';
+import FileAddBtn from '../../components/button/FileAddBtn';
 
 type Props = {};
 
@@ -40,6 +41,7 @@ const SharedScreen: React.FC<Props> = () => {
           </View>
 
         </ScrollView>
+        <FileAddBtn onPress={() => console.log()} />
       </View>
     </>
   );
@@ -49,6 +51,7 @@ export default SharedScreen;
 
 const styles = StyleSheet.create({
   container: {
+    flex:1,
     margin: 16,
   },
   txtTitleSty: {

@@ -7,6 +7,7 @@ import { FONT } from '../../theme/fonts';
 import { palette } from '../../theme/themes';
 import IssuedDocItem from '../../components/doc/IssuedDocItem';
 import { DOC_LIST } from '../../constant/constant';
+import FileAddBtn from '../../components/button/FileAddBtn';
 
 type Props = {};
 
@@ -40,6 +41,8 @@ const IssuedScreen: React.FC<Props> = () => {
           </View>
 
         </ScrollView>
+
+        <FileAddBtn onPress={() => console.log()} />
       </View>
     </>
   );
@@ -49,6 +52,7 @@ export default IssuedScreen;
 
 const styles = StyleSheet.create({
   container: {
+    flex:1,
     margin: 16,
   },
   txtTitleSty: {
