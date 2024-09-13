@@ -6,6 +6,8 @@ import { UserContext } from '../../context/user/UserContext';
 import { FONT } from '../../theme/fonts';
 import { palette } from '../../theme/themes';
 import FileAddBtn from '../../components/button/FileAddBtn';
+import DocumentPicker from 'react-native-document-picker';
+import RNFS from 'react-native-fs';
 
 type Props = {};
 
@@ -15,7 +17,30 @@ const HomeScreen: React.FC<Props> = () => {
   const navigation = useNavigation();
   const userContext = React.useContext(UserContext);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [file, setFile] = React.useState('');
 
+
+  const uploadFileOnPressHandler = async () => {
+    try {
+      const pickedFile = await DocumentPicker.pickSingle({
+        type: [DocumentPicker.types.allFiles],
+      });
+      console.log('pickedFile', pickedFile);
+      setFile(pickedFile);
+
+      await RNFS.readFile(pickedFile.uri, 'base64').then(data => {
+        console.log('base64', data);
+      });
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        console.log(err);
+      } else {
+        console.log(error);
+        throw err;
+      }
+    }
+  };
+ 
 
   return (
     <>
@@ -24,10 +49,10 @@ const HomeScreen: React.FC<Props> = () => {
           <View>
             <Text style={styles.txtTitleSty}>Home Screen</Text>
           </View>
-
+          <Text style={styles.txtTitleSty}>{file?.name}</Text>
         </ScrollView>
 
-        <FileAddBtn onPress={() => console.log()} />
+        <FileAddBtn onPress={() => uploadFileOnPressHandler()} />
       </View>
     </>
   );
