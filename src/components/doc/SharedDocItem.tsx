@@ -16,9 +16,9 @@ const SharedDocItem: React.FC<any> = ({ item }) => {
     return (
         <View style={styles.itemContainer}>
             <View>
-                <Text style={styles.txtTitleSty}>{item.name}</Text>
-                <Text style={styles.txtCatSty}>{item.category}</Text>
-                <Text style={styles.txtCatSty}>{item.sharedFrom}</Text>
+                <Text style={styles.txtTitleSty}>{item.docType}</Text>
+                <Text style={styles.txtCatSty}>{item.createdDate}</Text>
+                <Text style={styles.txtCatSty}>{item.fileName}</Text>
             </View>
             <TouchableOpacity>
                 <MaterialCommunityIcons name={'dots-vertical'} size={40} color={palette.black} />
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     txtCatSty: {
         //  fontFamily: FONT.Able.regular,
         fontSize: 14,
+        width:200,
         fontWeight: '400',
         color: palette.black,
     }

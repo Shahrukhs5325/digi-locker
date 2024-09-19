@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { UserContext } from '../../context/user/UserContext';
@@ -8,6 +8,7 @@ import { palette } from '../../theme/themes';
 import { DOC_LIST } from '../../constant/constant';
 import SharedDocItem from '../../components/doc/SharedDocItem';
 import FileAddBtn from '../../components/button/FileAddBtn';
+import { getDocApi } from '../../api/doc/docApi';
 
 type Props = {};
 
@@ -18,6 +19,25 @@ const SharedScreen: React.FC<Props> = () => {
   const userContext = React.useContext(UserContext);
   const [isLoading, setIsLoading] = React.useState(false);
 
+const [documents, setDocuments] = useState({});
+
+console.log('documents',documents);
+useEffect(() => {
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const payload = { userEmail: 'ezy@yopmail.com' };
+      const response = await getDocApi(payload);
+      setDocuments(response.data);
+    } catch (error) {
+      console.error('Error fetching documents:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  fetchData();
+}, []);
 
   return (
     <>
@@ -31,7 +51,7 @@ const SharedScreen: React.FC<Props> = () => {
             <FlatList
               showsVerticalScrollIndicator={false}
               keyExtractor={(item, index) => index.toString()}
-              data={DOC_LIST}
+              data={documents}
               renderItem={({ item }) =>
                 <SharedDocItem item={item} />
               }

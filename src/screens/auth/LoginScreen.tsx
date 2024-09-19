@@ -7,7 +7,7 @@ import PrimaryButton from '../../components/button/PrimaryButton';
 import TextInputCust from '../../components/textInput/TextInput';
 import { Auth } from 'aws-amplify';
 import { handleCognitoError } from '../../constant/constFunction';
-import { getCustomerByIdApi } from '../../api/user/userApi';
+// import { getCustomerByIdApi } from '../../api/user/userApi';
 import { UserContext } from '../../context/user/UserContext';
 import { getClientTheme } from '../../api/common/commonApi';
 import { FONT } from '../../theme/fonts';
@@ -56,7 +56,8 @@ const LoginScreen: React.FC<Props> = () => {
         if (user?.attributes) {
           console.log("***** cognito user *****", user?.attributes)
           const customerId = user?.attributes?.["custom:customerId"];
-          getCustDetails(customerId);
+          await navigation.replace("HomeScreen")
+         // getCustDetails(customerId);
           // setIsLoading(false);
         }
       } catch (error) {

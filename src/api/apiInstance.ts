@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Auth } from 'aws-amplify';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_URL = 'http://ebs-qa-zap-customer-springboot-env.me-south-1.elasticbeanstalk.com/zapsmobilecustomers/v1'
+const API_URL = 'https://n4t82niroj.execute-api.us-east-1.amazonaws.com/secure-doc-dev';
 
 const currentSession = async () => {
     try {

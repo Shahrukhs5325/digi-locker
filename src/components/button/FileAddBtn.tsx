@@ -1,19 +1,15 @@
 import React from "react";
 import { palette } from "../../theme/themes";
-import { Button, FAB } from "react-native-paper";
-import { UserContext } from "../../context/user/UserContext";
+import {  FAB } from "react-native-paper";
 import { StyleSheet } from "react-native";
+import { uploadFileOnPressHandler } from "../../util/util";
 
-interface Props {
-    onPress: () => void | any;
+type FileAddBtnProps = {
+    setFile: (file: any) => void;
+  };
+  
+  const FileAddBtn: React.FC<FileAddBtnProps> = ({setFile}) => {
 
-}
-
-const FileAddBtn: React.FC<Props> = ({
-    onPress,
-
-}) => {
-    const userContext = React.useContext(UserContext);
 
     return (
         <FAB
@@ -22,7 +18,7 @@ const FileAddBtn: React.FC<Props> = ({
             style={styles.fab}
             color={palette.primaryDark}
             rippleColor={palette.bgCard}
-            onPress={() => onPress()}
+            onPress={() => uploadFileOnPressHandler(setFile)} 
         />
     );
 }

@@ -22,7 +22,6 @@ const RegisterScreen: React.FC<Props> = () => {
   const userContext = React.useContext(UserContext);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isSentOTP, setIsSentOTP] = React.useState(false);
-  const [isNameAsPer, setIsNameAsPer] = React.useState(false);
   const [isTerm, setIsTerm] = React.useState(false);
 
   const [visible, setVisible] = React.useState(false);
@@ -44,7 +43,7 @@ const RegisterScreen: React.FC<Props> = () => {
   React.useEffect(() => {
     setErrors("");
     setOTP("");
-    setIsSentOTP(false);
+    // setIsSentOTP(false);
   }, [formData]);
 
   // React.useEffect(() => {
@@ -73,20 +72,11 @@ const RegisterScreen: React.FC<Props> = () => {
     } else if (!isEmailValid) {
       setErrors("Please enter valid email");
       return false;
+    }  else if (!formData?.mobileNo) {
+      setErrors("Please enter mobile number");
+      return false;
     } else if (!formData.password || !isPassValid) {
       setErrors("Password with 8 characters including 1 uppercase letter, 1 special character, and alphanumeric characters");
-      return false;
-    } else if (!formData?.mobileNo) {
-      setErrors("Please enter activation code");
-      return false;
-    } else if (!formData?.creditCardName) {
-      setErrors("Please enter card holder name");
-      return false;
-    } else if (!formData?.lastSixDigit) {
-      setErrors("Please enter last 6 digit number");
-      return false;
-    } else if (!formData?.firstFourDigit) {
-      setErrors("Please enter first 4 digit number");
       return false;
     }
 
@@ -97,7 +87,9 @@ const RegisterScreen: React.FC<Props> = () => {
 
   const submitHandler = () => {
     const val = validate()
-
+if(val){
+  signUpSubmit()
+}
   }
 
 
@@ -147,7 +139,8 @@ const RegisterScreen: React.FC<Props> = () => {
       }
     } catch (error) {
       console.log('error confirming sign up', error);
-      const msg = handleCognitoError(error)
+      setErrors(error.ExpiredCodeException);
+      const msg = handleCognitoError(error);
       setIsLoading(false);
       setErrors(msg);
       //  showSnackbar(msg, 'error')
@@ -173,37 +166,11 @@ const RegisterScreen: React.FC<Props> = () => {
     try {
       setIsLoading(true);
       const payload = {
-        customerId: 0,
-        customerName: formData?.firstName + " " + formData?.LastName,
-        employeeId: "",
-        email: formData?.email?.toLowerCase(),
-        phoneNo: "919999999999",
-        statusId: 1,
-        correlationId: "1",
-        countryId: "155",
-        stateId: 1,
-        cityName: "",
-        pinCode: "",
-        address: "",
-        statusName: 0,
-        userTypeId: 4,
-        errorMsg: "",
-        userName: user?.username,
-        binNumber: formData?.lastSixDigit,
-        mobileNo: formData?.mobileNo,
-        newCustomer: true,
-        deleteRequest: false,
-        deletionDateTime: 0,
-        distributionId: 0,
-        cognitoUserName: "",
-        corporateCustomer: false,
-        employee: {
-          "empId": 0,
-          "employeeEmail": "",
-          "employeeId": "",
-          "statusName": ""
-        },
-      }
+        userFirstName: formData?.firstName,
+        userLastName: formData?.LastName,
+        userEmail: formData?.email?.toLowerCase(),
+        userPhoneNo: formData?.mobileNo,
+      };
 
       const res = await addCustomerPostApi(payload);
 
@@ -329,6 +296,7 @@ const RegisterScreen: React.FC<Props> = () => {
 
             <PrimaryButton disabled={!isTerm || isLoading} loading={isLoading} onPress={() => submitHandler()}>Send OTP</PrimaryButton>
 
+
             <View style={styles.containerRegister}>
               <TouchableOpacity onPress={() => navigation.replace("LoginScreen")}>
                 <Text style={styles.txtSingIn}>Already have an account? Sign in</Text>
@@ -337,16 +305,20 @@ const RegisterScreen: React.FC<Props> = () => {
           </>
             :
             <>
-              <Text style={styles.txtSty}>SIGN UP</Text>
-              <View style={{ gap: 10 }}>
+              <View style={{ gap: 20 , marginVertical: 200}}>
                 <TextInputCust
-                  placeholder='First name'
-                  value={formData.firstName}
+                  placeholder='OTP'
+                  value={otp}
                   onChangeText={value => {
-                    setFormData({ ...formData, firstName: value });
+                    setOTP( value );
                     setErrors("");
                   }}
                 />
+
+             <PrimaryButton disabled={otp.length < 6 || isLoading} loading={isLoading} onPress={() => confirmSignUpHandler()}>Login</PrimaryButton>
+
+
+             <Text style={{ color: 'red', fontSize: 13 }}>{errors}</Text>
               </View>
             </>}
         </View>

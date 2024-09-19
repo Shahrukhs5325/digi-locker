@@ -1,13 +1,13 @@
 import axios from "../apiInstance";
 
 
-export const addCustomerPostApi = async (payload: any) => {
+export const addCustomPostApi = async (payload: any) => {
     const response = await axios.post(`/customers/addNewCustomer`, payload);
     return response;
 };
 
-export const getCustomerByIdApi = async (id: number | string) => {
-    const response = await axios.get(`/customers/getCustomerById?customerId=${id}`);
+export const addCustomerPostApi = async (payload: any) => {
+    const response = await axios.post('/save-user-data', payload);
     return response;
 };
 
