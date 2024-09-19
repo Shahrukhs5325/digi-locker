@@ -19,10 +19,13 @@ const SharedScreen: React.FC<Props> = () => {
   const userContext = React.useContext(UserContext);
   const [isLoading, setIsLoading] = React.useState(false);
 
-const [documents, setDocuments] = useState({});
+  const [documents, setDocuments] = useState([]);
 
-console.log('documents',documents);
-useEffect(() => {
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const fetchData = async () => {
     setIsLoading(true);
     try {
@@ -35,9 +38,6 @@ useEffect(() => {
       setIsLoading(false);
     }
   };
-
-  fetchData();
-}, []);
 
   return (
     <>
@@ -71,7 +71,7 @@ export default SharedScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     margin: 16,
   },
   txtTitleSty: {

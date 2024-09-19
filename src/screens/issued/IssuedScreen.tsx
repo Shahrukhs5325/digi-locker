@@ -8,6 +8,7 @@ import { palette } from '../../theme/themes';
 import IssuedDocItem from '../../components/doc/IssuedDocItem';
 import { DOC_LIST } from '../../constant/constant';
 import FileAddBtn from '../../components/button/FileAddBtn';
+import { getDocApi } from '../../api/doc/docApi';
 
 type Props = {};
 
@@ -16,8 +17,28 @@ type Props = {};
 const IssuedScreen: React.FC<Props> = () => {
   const navigation = useNavigation();
   const userContext = React.useContext(UserContext);
+
   const [isLoading, setIsLoading] = React.useState(false);
 
+  const [documents, setDocuments] = React.useState([]);
+
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const payload = { userEmail: 'ezy@yopmail.com' };
+      const response = await getDocApi(payload);
+      setDocuments(response.data);
+    } catch (error) {
+      console.error('Error fetching documents:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -31,7 +52,7 @@ const IssuedScreen: React.FC<Props> = () => {
             <FlatList
               showsVerticalScrollIndicator={false}
               keyExtractor={(item, index) => index.toString()}
-              data={DOC_LIST}
+              data={documents}
               renderItem={({ item }) =>
                 <IssuedDocItem item={item} />
               }
@@ -52,7 +73,7 @@ export default IssuedScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     margin: 16,
   },
   txtTitleSty: {

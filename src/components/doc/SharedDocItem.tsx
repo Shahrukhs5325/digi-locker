@@ -6,19 +6,20 @@ import { palette } from "../../theme/themes";
 import { Text } from "react-native-paper";
 import { FONT } from "../../theme/fonts";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import moment from "moment";
 
 
 const SharedDocItem: React.FC<any> = ({ item }) => {
     const userContext = React.useContext(UserContext);
 
 
-
     return (
         <View style={styles.itemContainer}>
-            <View>
+            <View style={{ width: '90%' }}>
                 <Text style={styles.txtTitleSty}>{item.docType}</Text>
-                <Text style={styles.txtCatSty}>{item.createdDate}</Text>
-                <Text style={styles.txtCatSty}>{item.fileName}</Text>
+                <Text style={styles.txtCatSty} numberOfLines={2}>{item.fileName}</Text>
+                <Text style={styles.txtCatSty}>{moment(item.createdDate).format("DD-MMM-YYYY hh:mm a")}</Text>
+
             </View>
             <TouchableOpacity>
                 <MaterialCommunityIcons name={'dots-vertical'} size={40} color={palette.black} />
@@ -36,7 +37,8 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        width: '100%'
     },
     txtTitleSty: {
         // fontFamily: FONT.Able.regular,
@@ -46,8 +48,7 @@ const styles = StyleSheet.create({
     },
     txtCatSty: {
         //  fontFamily: FONT.Able.regular,
-        fontSize: 14,
-        width:200,
+        fontSize: 13,
         fontWeight: '400',
         color: palette.black,
     }
