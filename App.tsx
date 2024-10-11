@@ -9,9 +9,9 @@ import { UserContextProvider } from './src/context/user/UserContext';
 
 const cognitoConfig = {
   identityPoolId: '',
-  region: "me-south-1",
-  userPoolId: "me-south-1_tgPFCMubu",
-  userPoolWebClientId: "5t0eu88492vcoqv3en8tgcoqh6"
+  region: "us-east-1",
+  userPoolId: "us-east-1_or29XtyUl",
+  userPoolWebClientId: "3i7ifajeluo7np0uhf9lu0rt3h"
 }
 
 
