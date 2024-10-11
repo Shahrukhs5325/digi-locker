@@ -28,14 +28,11 @@ const RegisterScreen: React.FC<Props> = () => {
 
   const [otp, setOTP] = React.useState("");
   const [formData, setFormData] = React.useState({
-    firstName: '',
-    LastName: '',
-    email: '',
-    password: '',
-    mobileNo: '',
-    lastSixDigit: '',
-    firstFourDigit: '',
-    creditCardName: '',
+    firstName: 'Test',
+    LastName: 'User',
+    email: 'test4@yopmail.com',
+    password: 'Test@123',
+    mobileNo: '919922941798',
   });
   const [errors, setErrors] = React.useState("");
 
@@ -72,7 +69,7 @@ const RegisterScreen: React.FC<Props> = () => {
     } else if (!isEmailValid) {
       setErrors("Please enter valid email");
       return false;
-    }  else if (!formData?.mobileNo) {
+    } else if (!formData?.mobileNo) {
       setErrors("Please enter mobile number");
       return false;
     } else if (!formData.password || !isPassValid) {
@@ -87,9 +84,9 @@ const RegisterScreen: React.FC<Props> = () => {
 
   const submitHandler = () => {
     const val = validate()
-if(val){
-  signUpSubmit()
-}
+    if (val) {
+      signUpSubmit()
+    }
   }
 
 
@@ -104,10 +101,6 @@ if(val){
         attributes: {
           email: formData.email,
           name: formData?.firstName + " " + formData?.LastName,
-          //  phone_number: formData.phoneNumber,
-          "custom:clientId": "1",
-          "custom:customerId": "0",
-          "custom:employeeId": "0",
         },
         autoSignIn: { enabled: true },
       });
@@ -170,16 +163,15 @@ if(val){
         userLastName: formData?.LastName,
         userEmail: formData?.email?.toLowerCase(),
         userPhoneNo: formData?.mobileNo,
+        userDOB: "11-02-1990"
       };
 
       const res = await addCustomerPostApi(payload);
 
-      if (res?.data) {
-        const customer = res?.data?.data;
-        console.log("++++++++++ customer added : ", customer?.customerId);
-        await updateUser(customer);
-        await userContext.setUser(customer);
-        await getClientThemeApi(customer?.correlationId)
+      if (res) {
+        // const customer = res?.data?.data;
+        console.log("++++++++++ user added : ", payload);
+        await userContext.setUser(payload);
         navigation.replace("HomeScreen");
       } else {
         navigation.replace("LoginScreen");
@@ -193,33 +185,6 @@ if(val){
     }
   }
 
-  // Update cognito customerId
-  const updateUser = async (data: any) => {
-    const user = await Auth.currentAuthenticatedUser();
-    await Auth.updateUserAttributes(user, {
-      "custom:customerId": data?.customerId?.toString(),
-    });
-  }
-
-  const getClientThemeApi = async (id: number | string) => {
-    try {
-
-      const res = await getClientTheme(id);
-      if (res?.data?.data) {
-        const theme = res?.data?.data?.customTheme
-        console.log("/n**** Custom Theme Color **** ", theme);
-        await userContext.secCustomTheme(palette);
-      } else {
-        console.log("\n**** Default Theme ****\n");
-        await userContext.secCustomTheme(palette);
-      }
-
-    } catch (error) {
-      await userContext.secCustomTheme(palette);
-      console.log("\n**** Default Theme ****\n");
-      console.log("getCustomerByIdApi err: ", error);
-    }
-  }
 
   return (
     <>
@@ -305,20 +270,20 @@ if(val){
           </>
             :
             <>
-              <View style={{ gap: 20 , marginVertical: 200}}>
+              <View style={{ gap: 20, marginVertical: 200 }}>
                 <TextInputCust
                   placeholder='OTP'
                   value={otp}
                   onChangeText={value => {
-                    setOTP( value );
+                    setOTP(value);
                     setErrors("");
                   }}
                 />
 
-             <PrimaryButton disabled={otp.length < 6 || isLoading} loading={isLoading} onPress={() => confirmSignUpHandler()}>Login</PrimaryButton>
+                <PrimaryButton disabled={otp.length < 6 || isLoading} loading={isLoading} onPress={() => confirmSignUpHandler()}>Login</PrimaryButton>
 
 
-             <Text style={{ color: 'red', fontSize: 13 }}>{errors}</Text>
+                <Text style={{ color: 'red', fontSize: 13 }}>{errors}</Text>
               </View>
             </>}
         </View>
