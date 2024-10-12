@@ -5,10 +5,9 @@ import { Text } from 'react-native-paper';
 import { UserContext } from '../../context/user/UserContext';
 import { FONT } from '../../theme/fonts';
 import { palette } from '../../theme/themes';
-import { DOC_LIST } from '../../constant/constant';
 import SharedDocItem from '../../components/doc/SharedDocItem';
 import FileAddBtn from '../../components/button/FileAddBtn';
-import { getDocApi, getSharedDocApi } from '../../api/doc/docApi';
+import { getSharedDocApi } from '../../api/doc/docApi';
 import Loader from '../../components/loader/Loader';
 
 type Props = {};
@@ -67,6 +66,9 @@ const SharedScreen: React.FC<Props> = () => {
               }
               style={styles.listContents}
               contentContainerStyle={styles.list}
+              ListEmptyComponent={<View style={styles.errView}>
+                <Text style={styles.emtTxt}>Data not found</Text>
+              </View>}
             />
           </View>
 
@@ -97,6 +99,19 @@ const styles = StyleSheet.create({
   listContents: {
     marginVertical: 16
 
+  },
+  errView: {
+    flex: 1,
+    marginTop: "30%",
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  emtTxt: {
+    fontFamily: FONT.Able.regular,
+    fontSize: 16,
+    fontWeight: '400',
+    color: palette.black,
+    letterSpacing: 2,
   }
 
 

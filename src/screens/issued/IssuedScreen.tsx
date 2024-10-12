@@ -6,7 +6,6 @@ import { UserContext } from '../../context/user/UserContext';
 import { FONT } from '../../theme/fonts';
 import { palette } from '../../theme/themes';
 import IssuedDocItem from '../../components/doc/IssuedDocItem';
-import { DOC_LIST } from '../../constant/constant';
 import FileAddBtn from '../../components/button/FileAddBtn';
 import { getDocApi } from '../../api/doc/docApi';
 import Loader from '../../components/loader/Loader';
@@ -62,10 +61,13 @@ const IssuedScreen: React.FC<Props> = () => {
               keyExtractor={(item, index) => index.toString()}
               data={documents}
               renderItem={({ item }) =>
-                <IssuedDocItem item={item} fetchData={fetchData}/>
+                <IssuedDocItem item={item} fetchData={fetchData} />
               }
               style={styles.listContents}
               contentContainerStyle={styles.list}
+              ListEmptyComponent={<View style={styles.errView}>
+                <Text style={styles.emtTxt}>Data not found</Text>
+              </View>}
             />
           </View>
 
@@ -97,6 +99,19 @@ const styles = StyleSheet.create({
   listContents: {
     marginVertical: 16
 
+  },
+  errView: {
+    flex: 1,
+    marginTop: "30%",
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  emtTxt: {
+    fontFamily: FONT.Able.regular,
+    fontSize: 16,
+    fontWeight: '400',
+    color: palette.black,
+    letterSpacing: 2,
   }
 
 
