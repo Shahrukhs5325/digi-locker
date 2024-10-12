@@ -20,8 +20,8 @@ const LoginScreen: React.FC<Props> = () => {
   const navigation = useNavigation();
   const userContext = React.useContext(UserContext);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [emailId, setEmailId] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [emailId, setEmailId] = React.useState("test4@yopmail.com");
+  const [password, setPassword] = React.useState("Test@123");
   const [errors, setErrors] = React.useState("");
 
   React.useEffect(() => {
@@ -57,7 +57,7 @@ const LoginScreen: React.FC<Props> = () => {
           console.log("***** cognito user *****", user?.attributes)
           const customerId = user?.attributes?.["custom:customerId"];
           await navigation.replace("HomeScreen")
-         // getCustDetails(customerId);
+          // getCustDetails(customerId);
           // setIsLoading(false);
         }
       } catch (error) {
