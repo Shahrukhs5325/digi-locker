@@ -47,9 +47,9 @@ const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet }) => {
 
             const res = await uploadDocApi(payload);
             if (res.status == 200) {
-                //  console.log(res.data);
                 refRBSheet.current.close()
-                onToggleSnackBar()
+                onToggleSnackBar();
+                setFile(null);
                 //navigation.navigate('SharedScreen');
             } else {
                 console.log('error');
@@ -84,13 +84,13 @@ const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet }) => {
                             onSelect={setField}
                             menuContentStyle={styles.dropdown}
                         /> */}
-                        <Button mode="contained-tonal" style={{}} onPress={() => uploadFileOnPressHandler(setFile)}>
+                        <Button mode="outlined" style={{}} onPress={() => uploadFileOnPressHandler(setFile)}>
                             {file?.name ? "Change file" : "Select file"}
                         </Button>
 
-                        <Button mode="outlined" style={{}} onPress={uploadDoc}>
-                            Upload Document
-                        </Button>
+                        {file?.name ? <Button mode="outlined" style={{}} onPress={uploadDoc}>
+                            Upload File
+                        </Button> : null}
 
 
                     </View>
