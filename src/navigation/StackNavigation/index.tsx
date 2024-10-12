@@ -8,6 +8,7 @@ import LoginScreen from "../../screens/auth/LoginScreen";
 import RegisterScreen from "../../screens/auth/RegisterScreen";
 import HomeScreen from "../../screens/home/HomeScreen";
 import { RenderTabNavigation } from "../TabNavigation";
+import PdfViewScreen from "../../screens/pdfView/PdfViewScreen";
 
 
 const Stack = createStackNavigator();
@@ -44,6 +45,10 @@ const Navigation = () => {
         <Stack.Screen
           name={"HomeScreen"}
           component={RenderTabNavigation}
+        />
+         <Stack.Screen
+          name={"PdfViewScreen"}
+          component={PdfViewScreen}
         />
 
 

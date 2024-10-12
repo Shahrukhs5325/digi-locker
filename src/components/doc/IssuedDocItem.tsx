@@ -6,10 +6,13 @@ import { Divider, Menu, Text } from "react-native-paper";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from "moment";
 import { deleteDocApi } from "../../api/doc/docApi";
+import { useNavigation } from "@react-navigation/native";
 
 
 const IssuedDocItem: React.FC<any> = ({ item, fetchData }) => {
     const userContext = React.useContext(UserContext);
+    const navigation = useNavigation();
+
     const [visible, setVisible] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
 
@@ -37,6 +40,11 @@ const IssuedDocItem: React.FC<any> = ({ item, fetchData }) => {
         }
     };
 
+    const viewDocHandler = () => {
+        closeMenu();
+        navigation.navigate('PdfViewScreen', { doc: item });
+    }
+
     return (
         <View style={styles.itemContainer}>
             <View style={{ width: '90%', }}>
@@ -52,7 +60,7 @@ const IssuedDocItem: React.FC<any> = ({ item, fetchData }) => {
                     <MaterialCommunityIcons name={'dots-vertical'} size={30} color={palette.black} />
                 </TouchableOpacity>}>
                 <Menu.Item onPress={() => { }} title="Share" />
-                <Menu.Item onPress={() => { }} title="View" />
+                <Menu.Item onPress={() => { viewDocHandler() }} title="View" />
                 <Menu.Item onPress={() => { }} title="Download" />
                 {/* <Divider /> */}
                 <Menu.Item onPress={() => { deleteDocomentHandler() }} title="Delete" />
