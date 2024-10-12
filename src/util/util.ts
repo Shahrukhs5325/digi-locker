@@ -6,7 +6,7 @@ export const uploadFileOnPressHandler = async (setFile: (file: any) => void) => 
     const pickedFile = await DocumentPicker.pickSingle({
       type: [DocumentPicker.types.allFiles],
     });
-    console.log('pickedFile', pickedFile);
+    // console.log('pickedFile', pickedFile);
     setFile(pickedFile);
 
     await RNFS.readFile(pickedFile.uri, 'base64').then(data => {

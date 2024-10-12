@@ -6,6 +6,7 @@ import BottomSheet from "../bottomsheet/BottomSheet";
 import { useNavigation } from "@react-navigation/native";
 import { postDocApi } from "../../api/doc/docApi";
 import { Dropdown } from "react-native-paper-dropdown";
+import { uploadFileOnPressHandler } from "../../util/util";
 
 type FileAddBtnProps = {
     refRBSheet: any;
@@ -65,20 +66,23 @@ const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet }) => {
 
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.container}>
-                        <Text style={styles.txtTitleSty}>Home Screen</Text>
-                        <View style={styles.fileSty}>
-                            <Text style={styles.txtTitleSty}>{file?.name}</Text>
-                        </View>
-                        <Dropdown
+                        <Text style={styles.txtTitleSty}>Upload File</Text>
+                        <Text style={styles.txtFileSty}>{file?.name}</Text>
+                        {/* <Dropdown
                             label="Select document type"
                             options={OPTIONS}
                             value={field}
                             onSelect={setField}
                             menuContentStyle={styles.dropdown}
-                        />
-                        <Button mode="contained" style={{}} onPress={uploadDoc}>
+                        /> */}
+                        <Button mode="contained-tonal" style={{}} onPress={() => uploadFileOnPressHandler(setFile)}>
+                            {file?.name ? "Change file" : "Select file"}
+                        </Button>
+
+                        <Button mode="outlined" style={{}} onPress={uploadDoc}>
                             Upload Document
                         </Button>
+
 
                     </View>
                 </ScrollView>
@@ -112,6 +116,11 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         color: '#000',
         letterSpacing: 1,
+    },
+    txtFileSty: {
+        fontSize: 16,
+        fontWeight: '400',
+        color: '#000',
     },
     fileSty: {
         backgroundColor: '#dcdcdc',
