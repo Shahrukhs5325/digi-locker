@@ -73,7 +73,7 @@ const SharedScreen: React.FC<Props> = () => {
           </View>
 
         </ScrollView>
-        <FileAddBtn refRBSheet={refRBSheet} />
+        <FileAddBtn refRBSheet={refRBSheet} fetchData={fetchData}/>
       </View>
     </>
   );

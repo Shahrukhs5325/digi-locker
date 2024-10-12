@@ -73,7 +73,7 @@ const IssuedScreen: React.FC<Props> = () => {
 
         </ScrollView>
 
-        <FileAddBtn refRBSheet={refRBSheet} />
+        <FileAddBtn refRBSheet={refRBSheet} fetchData={fetchData}/>
       </View>
     </>
   );

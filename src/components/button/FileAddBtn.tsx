@@ -11,6 +11,7 @@ import { UserContext } from "../../context/user/UserContext";
 
 type FileAddBtnProps = {
     refRBSheet: any;
+    fetchData?: () => void;
 };
 
 const OPTIONS = [
@@ -20,7 +21,7 @@ const OPTIONS = [
 ];
 
 
-const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet }) => {
+const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet, fetchData }) => {
     const navigation = useNavigation();
     const userContext = React.useContext(UserContext);
 
@@ -50,6 +51,7 @@ const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet }) => {
                 refRBSheet.current.close()
                 onToggleSnackBar();
                 setFile(null);
+                fetchData()
                 //navigation.navigate('SharedScreen');
             } else {
                 console.log('error');
@@ -84,11 +86,15 @@ const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet }) => {
                             onSelect={setField}
                             menuContentStyle={styles.dropdown}
                         /> */}
-                        <Button mode="outlined" style={{}} onPress={() => uploadFileOnPressHandler(setFile)}>
+                        <Button mode="outlined" style={{}}
+                            disabled={isLoading}
+                            onPress={() => uploadFileOnPressHandler(setFile)}>
                             {file?.name ? "Change file" : "Select file"}
                         </Button>
 
-                        {file?.name ? <Button mode="outlined" style={{}} onPress={uploadDoc}>
+                        {file?.name ? <Button mode="outlined" style={{}}
+                            loading={isLoading}
+                            onPress={uploadDoc}>
                             Upload File
                         </Button> : null}
 
