@@ -4,7 +4,7 @@ import { Button, FAB, Snackbar } from "react-native-paper";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import BottomSheet from "../bottomsheet/BottomSheet";
 import { useNavigation } from "@react-navigation/native";
-import { postDocApi } from "../../api/doc/docApi";
+import { uploadDocApi } from "../../api/doc/docApi";
 import { Dropdown } from "react-native-paper-dropdown";
 import { uploadFileOnPressHandler } from "../../util/util";
 import { UserContext } from "../../context/user/UserContext";
@@ -45,7 +45,7 @@ const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet }) => {
                 docType: field,
             };
 
-            const res = await postDocApi(payload);
+            const res = await uploadDocApi(payload);
             if (res.status == 200) {
                 //  console.log(res.data);
                 refRBSheet.current.close()

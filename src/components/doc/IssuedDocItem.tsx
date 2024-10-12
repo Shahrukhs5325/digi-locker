@@ -5,17 +5,37 @@ import { palette } from "../../theme/themes";
 import { Divider, Menu, Text } from "react-native-paper";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from "moment";
+import { deleteDocApi } from "../../api/doc/docApi";
 
 
-const IssuedDocItem: React.FC<any> = ({ item }) => {
+const IssuedDocItem: React.FC<any> = ({ item, fetchData }) => {
     const userContext = React.useContext(UserContext);
     const [visible, setVisible] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const openMenu = () => setVisible(true);
 
     const closeMenu = () => setVisible(false);
 
-    // console.log(item);
+    const deleteDocomentHandler = async () => {
+        setIsLoading(true);
+        try {
+            const payload = [
+                {
+                    "userEmail": item?.userEmail,
+                    "uuid": item?.uuid,
+                    "fileKey": item?.fileKey,
+                }
+            ];
+            const response = await deleteDocApi(payload);
+            fetchData();
+            closeMenu();
+        } catch (error) {
+            console.error('Error deleteDocApi :', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <View style={styles.itemContainer}>
@@ -35,7 +55,7 @@ const IssuedDocItem: React.FC<any> = ({ item }) => {
                 <Menu.Item onPress={() => { }} title="View" />
                 <Menu.Item onPress={() => { }} title="Download" />
                 {/* <Divider /> */}
-                <Menu.Item onPress={() => { }} title="Delete" />
+                <Menu.Item onPress={() => { deleteDocomentHandler() }} title="Delete" />
             </Menu>
 
         </View>

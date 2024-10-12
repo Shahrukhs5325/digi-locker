@@ -62,7 +62,7 @@ const IssuedScreen: React.FC<Props> = () => {
               keyExtractor={(item, index) => index.toString()}
               data={documents}
               renderItem={({ item }) =>
-                <IssuedDocItem item={item} />
+                <IssuedDocItem item={item} fetchData={fetchData}/>
               }
               style={styles.listContents}
               contentContainerStyle={styles.list}
