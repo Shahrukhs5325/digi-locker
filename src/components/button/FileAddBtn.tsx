@@ -61,9 +61,10 @@ const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet }) => {
                 rippleColor={palette.bgCard}
                 onPress={() => refRBSheet.current.open()}
             />
-            <BottomSheet refRBSheet={refRBSheet} index={0}>
-                <View>
-                    <ScrollView showsVerticalScrollIndicator={false}>
+            <BottomSheet refRBSheet={refRBSheet}>
+
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <View style={styles.container}>
                         <Text style={styles.txtTitleSty}>Home Screen</Text>
                         <View style={styles.fileSty}>
                             <Text style={styles.txtTitleSty}>{file?.name}</Text>
@@ -75,12 +76,12 @@ const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet }) => {
                             onSelect={setField}
                             menuContentStyle={styles.dropdown}
                         />
-                        <Button mode="contained" style={{ marginTop: 100 }} onPress={uploadDoc}>
+                        <Button mode="contained" style={{}} onPress={uploadDoc}>
                             Upload Document
                         </Button>
 
-                    </ScrollView>
-                </View>
+                    </View>
+                </ScrollView>
             </BottomSheet>
 
 
@@ -104,16 +105,16 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         margin: 16,
+        gap: 16
     },
     txtTitleSty: {
         fontSize: 18,
         fontWeight: '700',
         color: '#000',
-        letterSpacing: 2,
+        letterSpacing: 1,
     },
     fileSty: {
         backgroundColor: '#dcdcdc',
-        marginVertical: 55,
         borderWidth: 1,
         padding: 5,
         borderColor: '#000',

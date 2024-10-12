@@ -11,7 +11,6 @@ const HomeScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-
       <FileAddBtn refRBSheet={refRBSheet} />
     </View>
   );

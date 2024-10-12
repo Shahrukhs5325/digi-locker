@@ -4,34 +4,37 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 interface Props {
     children?: React.ReactNode | any;
     refRBSheet: any;
-    index: number;
-}
+ }
 
-const BottomSheet: React.FC<Props> = ({ refRBSheet, children, index }) => {
+const BottomSheet: React.FC<Props> = ({ refRBSheet, children }) => {
 
-    const snapPoints = React.useMemo(() => ['30%', '40%', '50%', '60%', '70%', '80%', '90%'], []);
-
+ 
 
 
     return (
         <RBSheet
+            height={300}
             useNativeDriver={false}
             ref={refRBSheet}
-            customStyles={{
-                wrapper: {
-                    // backgroundColor: 'transparent',
-                },
-                draggableIcon: {
-                    backgroundColor: '#000',
-                },
-            }}
+            draggable={true}
             customModalProps={{
                 animationType: 'slide',
                 statusBarTranslucent: true,
             }}
             customAvoidingViewProps={{
                 enabled: false,
+            }}
+
+            customStyles={{
+                container: {
+                    borderTopLeftRadius: 10,
+                    borderTopRightRadius: 10,
+                },
+                draggableIcon: {
+                    width: 80,
+                },
             }}>
+
             {children}
         </RBSheet>
     );
