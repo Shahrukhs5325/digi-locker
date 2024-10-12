@@ -1,12 +1,13 @@
 import React from "react";
 import { palette } from "../../theme/themes";
-import { Button, FAB } from "react-native-paper";
+import { Button, FAB, Snackbar } from "react-native-paper";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import BottomSheet from "../bottomsheet/BottomSheet";
 import { useNavigation } from "@react-navigation/native";
 import { postDocApi } from "../../api/doc/docApi";
 import { Dropdown } from "react-native-paper-dropdown";
 import { uploadFileOnPressHandler } from "../../util/util";
+import { UserContext } from "../../context/user/UserContext";
 
 type FileAddBtnProps = {
     refRBSheet: any;
@@ -21,27 +22,35 @@ const OPTIONS = [
 
 const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet }) => {
     const navigation = useNavigation();
+    const userContext = React.useContext(UserContext);
 
 
     const [isLoading, setIsLoading] = React.useState(false);
     const [file, setFile] = React.useState<any>(null); // Adjusted type
     const [field, setField] = React.useState<string>('');
 
+    const [visibleSnackBar, setVisibleSnackBar] = React.useState(false);
+
+    const onToggleSnackBar = () => setVisibleSnackBar(!visibleSnackBar);
+
+    const onDismissSnackBar = () => setVisibleSnackBar(false);
 
     const uploadDoc = async () => {
         try {
             setIsLoading(true);
             const payload = {
                 file: 'pdf',
-                userEmail: 'ezy@yopmail.com',
+                userEmail: userContext.user,
                 fileName: file.name,
                 docType: field,
             };
 
             const res = await postDocApi(payload);
-            if (res) {
-                console.log(res.data.message);
-                navigation.navigate('SharedScreen');
+            if (res.status == 200) {
+                //  console.log(res.data);
+                refRBSheet.current.close()
+                onToggleSnackBar()
+                //navigation.navigate('SharedScreen');
             } else {
                 console.log('error');
             }
@@ -88,7 +97,17 @@ const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet }) => {
                 </ScrollView>
             </BottomSheet>
 
-
+            <Snackbar
+                visible={visibleSnackBar}
+                onDismiss={onDismissSnackBar}
+                action={{
+                    label: 'Undo',
+                    onPress: () => {
+                        onDismissSnackBar()
+                    },
+                }}>
+                File upload successfully
+            </Snackbar>
         </>
     );
 }

@@ -53,11 +53,12 @@ const LoginScreen: React.FC<Props> = () => {
       try {
         setIsLoading(true);
         const user = await Auth.signIn(emailId?.toLowerCase(), password);
-        if (user?.attributes) {
+        if (user) {
           console.log("***** cognito user *****", user?.attributes)
-          const customerId = user?.attributes?.["custom:customerId"];
-          await navigation.replace("HomeScreen")
-          // getCustDetails(customerId);
+           await navigation.replace("HomeScreen");
+           await userContext.setUser(emailId);
+
+           //getCustDetails(emailId);
           // setIsLoading(false);
         }
       } catch (error) {

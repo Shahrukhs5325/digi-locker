@@ -47,8 +47,9 @@ const SplashScreen: React.FC<Props> = () => {
     try {
       const user = await Auth.currentAuthenticatedUser();
       if (user && user?.username) {
-        const customerId = user?.attributes?.["custom:customerId"];
-        console.log('****** autoSignIn ', customerId);
+         console.log('****** autoSignIn ', user?.attributes?.email);
+        await userContext.setUser(user?.attributes?.email);
+
         navigation.replace('HomeScreen');
 
       }

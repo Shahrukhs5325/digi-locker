@@ -20,8 +20,9 @@ const IssuedScreen: React.FC<Props> = () => {
   const refRBSheet = useRef();
 
   const [isLoading, setIsLoading] = React.useState(false);
-
   const [documents, setDocuments] = React.useState([]);
+
+  console.log(userContext.user);
 
 
   React.useEffect(() => {
@@ -31,7 +32,7 @@ const IssuedScreen: React.FC<Props> = () => {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const payload = { userEmail: 'ezy@yopmail.com' };
+      const payload = { userEmail: userContext.user };
       const response = await getDocApi(payload);
       setDocuments(response.data);
     } catch (error) {
