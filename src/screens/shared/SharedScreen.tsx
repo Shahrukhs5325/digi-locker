@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { UserContext } from '../../context/user/UserContext';
@@ -17,6 +17,8 @@ type Props = {};
 const SharedScreen: React.FC<Props> = () => {
   const navigation = useNavigation();
   const userContext = React.useContext(UserContext);
+  const refRBSheet = useRef();
+
   const [isLoading, setIsLoading] = React.useState(false);
 
   const [documents, setDocuments] = useState([]);
@@ -61,7 +63,7 @@ const SharedScreen: React.FC<Props> = () => {
           </View>
 
         </ScrollView>
-        <FileAddBtn onPress={() => console.log()} />
+        <FileAddBtn refRBSheet={refRBSheet} />
       </View>
     </>
   );

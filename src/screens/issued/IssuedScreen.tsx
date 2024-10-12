@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useRef } from 'react';
 import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { UserContext } from '../../context/user/UserContext';
@@ -17,6 +17,7 @@ type Props = {};
 const IssuedScreen: React.FC<Props> = () => {
   const navigation = useNavigation();
   const userContext = React.useContext(UserContext);
+  const refRBSheet = useRef();
 
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -63,7 +64,7 @@ const IssuedScreen: React.FC<Props> = () => {
 
         </ScrollView>
 
-        <FileAddBtn onPress={() => console.log()} />
+        <FileAddBtn refRBSheet={refRBSheet} />
       </View>
     </>
   );
