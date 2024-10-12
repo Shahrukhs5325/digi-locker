@@ -169,9 +169,11 @@ const RegisterScreen: React.FC<Props> = () => {
       const res = await addCustomerPostApi(payload);
 
       if (res) {
-        // const customer = res?.data?.data;
-        console.log("++++++++++ user added : ", payload);
-        await userContext.setUser(payload);
+        const user = res?.data;
+        console.log("++++++++++ user added : ", user);
+        // await userContext.setUser(payload);
+        await userContext.setUser(user?.email);
+
         navigation.replace("HomeScreen");
       } else {
         navigation.replace("LoginScreen");

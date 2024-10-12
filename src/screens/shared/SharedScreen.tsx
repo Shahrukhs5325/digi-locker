@@ -9,6 +9,7 @@ import { DOC_LIST } from '../../constant/constant';
 import SharedDocItem from '../../components/doc/SharedDocItem';
 import FileAddBtn from '../../components/button/FileAddBtn';
 import { getDocApi } from '../../api/doc/docApi';
+import Loader from '../../components/loader/Loader';
 
 type Props = {};
 
@@ -31,7 +32,7 @@ const SharedScreen: React.FC<Props> = () => {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const payload = { userEmail: 'ezy@yopmail.com' };
+      const payload = { userEmail: userContext.user };
       const response = await getDocApi(payload);
       setDocuments(response.data);
     } catch (error) {
@@ -40,6 +41,13 @@ const SharedScreen: React.FC<Props> = () => {
       setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <Loader />
+    )
+  }
+
 
   return (
     <>

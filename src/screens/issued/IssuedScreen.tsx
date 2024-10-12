@@ -9,6 +9,7 @@ import IssuedDocItem from '../../components/doc/IssuedDocItem';
 import { DOC_LIST } from '../../constant/constant';
 import FileAddBtn from '../../components/button/FileAddBtn';
 import { getDocApi } from '../../api/doc/docApi';
+import Loader from '../../components/loader/Loader';
 
 type Props = {};
 
@@ -22,7 +23,6 @@ const IssuedScreen: React.FC<Props> = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [documents, setDocuments] = React.useState([]);
 
-  console.log(userContext.user);
 
 
   React.useEffect(() => {
@@ -41,6 +41,12 @@ const IssuedScreen: React.FC<Props> = () => {
       setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <Loader />
+    )
+  }
 
   return (
     <>
