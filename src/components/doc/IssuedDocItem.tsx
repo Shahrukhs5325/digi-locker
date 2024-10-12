@@ -7,6 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import moment from "moment";
 import { deleteDocApi } from "../../api/doc/docApi";
 import { useNavigation } from "@react-navigation/native";
+import Octicons from 'react-native-vector-icons/Octicons';
 
 
 const IssuedDocItem: React.FC<any> = ({ item, fetchData }) => {
@@ -47,24 +48,28 @@ const IssuedDocItem: React.FC<any> = ({ item, fetchData }) => {
 
     return (
         <View style={styles.itemContainer}>
-            <View style={{ width: '90%', }}>
+            <View style={{ width: '80%', }}>
                 <Text style={styles.txtCatSty} numberOfLines={2}>{item.fileName}</Text>
                 <Text style={styles.txtTitleSty}>{item.docType}</Text>
                 <Text style={styles.txtCatSty}>{moment(item.createdDate).format("DD-MMM-YYYY hh:mm a")}</Text>
             </View>
 
-            <Menu
-                visible={visible}
-                onDismiss={closeMenu}
-                anchor={<TouchableOpacity onPress={() => openMenu()}>
-                    <MaterialCommunityIcons name={'dots-vertical'} size={30} color={palette.black} />
-                </TouchableOpacity>}>
-                <Menu.Item onPress={() => { }} title="Share" />
-                <Menu.Item onPress={() => { viewDocHandler() }} title="View" />
-                <Menu.Item onPress={() => { }} title="Download" />
-                {/* <Divider /> */}
-                <Menu.Item onPress={() => { deleteDocomentHandler() }} title="Delete" />
-            </Menu>
+            <>
+                {item?.verificationStatus ?
+                    <Octicons name={"verified"} size={24} color={"green"} /> : null}
+                <Menu
+                    visible={visible}
+                    onDismiss={closeMenu}
+                    anchor={<TouchableOpacity onPress={() => openMenu()}>
+                        <MaterialCommunityIcons name={'dots-vertical'} size={30} color={palette.black} />
+                    </TouchableOpacity>}>
+                    <Menu.Item onPress={() => { }} title="Share" />
+                    <Menu.Item onPress={() => { viewDocHandler() }} title="View" />
+                    <Menu.Item onPress={() => { }} title="Download" />
+                    {/* <Divider /> */}
+                    <Menu.Item onPress={() => { deleteDocomentHandler() }} title="Delete" />
+                </Menu>
+            </>
 
         </View>
 
