@@ -11,6 +11,7 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import BottomSheet from "../bottomsheet/BottomSheet";
 import ShareForm from "../shere/ShareForm";
 import Loader from "../loader/Loader";
+import { downloadFileHandler } from "../../util/util";
 
 
 const IssuedDocItem: React.FC<any> = ({ item, fetchData }) => {
@@ -79,6 +80,7 @@ const IssuedDocItem: React.FC<any> = ({ item, fetchData }) => {
             const payload = { userEmail: userContext.user, uuid: item?.uuid };
             const response = await getDocViewLink(payload);
             setDocData(response?.data);
+            downloadFileHandler(response?.data?.fileUrl);
             closeMenu();
         } catch (error) {
             console.error('Error fetching documents:', error);
@@ -112,8 +114,7 @@ const IssuedDocItem: React.FC<any> = ({ item, fetchData }) => {
                         </TouchableOpacity>}>
                         <Menu.Item onPress={() => { shereDocomentHandler() }} title="Share" />
                         <Menu.Item onPress={() => { getLinkViewHandler() }} title="View" />
-                        <Menu.Item onPress={() => { }} title="Download" />
-                        {/* <Divider /> */}
+                        <Menu.Item onPress={() => { getLinkDownloadHandler() }} title="Download" />
                         <Menu.Item onPress={() => { deleteDocomentHandler() }} title="Delete" />
                     </Menu>
                 </>

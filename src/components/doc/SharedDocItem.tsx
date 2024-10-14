@@ -11,6 +11,7 @@ import BottomSheet from "../bottomsheet/BottomSheet";
 import ShareDeleteDoc from "../shere/ShareDeleteDoc";
 import { getSharedViewLink } from "../../api/doc/docApi";
 import Loader from "../loader/Loader";
+import { downloadFileHandler } from "../../util/util";
 
 
 const SharedDocItem: React.FC<any> = ({ item, fetchData }) => {
@@ -51,8 +52,7 @@ const SharedDocItem: React.FC<any> = ({ item, fetchData }) => {
             const response = await getSharedViewLink(payload);
             setDocData(response?.data);
             closeMenu();
-            // navigation.navigate('PdfViewScreen', { doc: data });
-            //(response.data);
+            downloadFileHandler(response?.data?.viewLink);
         } catch (error) {
             console.error('Error fetching documents:', error);
         } finally {
@@ -65,7 +65,7 @@ const SharedDocItem: React.FC<any> = ({ item, fetchData }) => {
             <Loader />
         )
     }
-    
+
     return (
         <>
             <View style={styles.itemContainer}>
