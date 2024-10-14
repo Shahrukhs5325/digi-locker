@@ -65,6 +65,7 @@ const SharedDocItem: React.FC<any> = ({ item, fetchData }) => {
             <Loader />
         )
     }
+    
     return (
         <>
             <View style={styles.itemContainer}>

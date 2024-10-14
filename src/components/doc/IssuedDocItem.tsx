@@ -5,11 +5,12 @@ import { palette } from "../../theme/themes";
 import { Menu, Text } from "react-native-paper";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from "moment";
-import { deleteDocApi } from "../../api/doc/docApi";
+import { deleteDocApi, getDocViewLink } from "../../api/doc/docApi";
 import { useNavigation } from "@react-navigation/native";
 import Octicons from 'react-native-vector-icons/Octicons';
 import BottomSheet from "../bottomsheet/BottomSheet";
 import ShareForm from "../shere/ShareForm";
+import Loader from "../loader/Loader";
 
 
 const IssuedDocItem: React.FC<any> = ({ item, fetchData }) => {
@@ -19,6 +20,7 @@ const IssuedDocItem: React.FC<any> = ({ item, fetchData }) => {
 
     const [visible, setVisible] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
+    const [docData, setDocData] = React.useState();
 
     const openMenu = () => setVisible(true);
 
@@ -55,6 +57,41 @@ const IssuedDocItem: React.FC<any> = ({ item, fetchData }) => {
         navigation.navigate('PdfViewScreen', { doc: item });
     }
 
+    const getLinkViewHandler = async () => {
+        setIsLoading(true);
+        try {
+            const payload = { userEmail: userContext.user, uuid: item?.uuid };
+            const response = await getDocViewLink(payload);
+            setDocData(response?.data);
+            closeMenu();
+            navigation.navigate('PdfViewScreen', { doc: response?.data });
+            //(response.data);
+        } catch (error) {
+            console.error('Error fetching documents:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const getLinkDownloadHandler = async () => {
+        setIsLoading(true);
+        try {
+            const payload = { userEmail: userContext.user, uuid: item?.uuid };
+            const response = await getDocViewLink(payload);
+            setDocData(response?.data);
+            closeMenu();
+        } catch (error) {
+            console.error('Error fetching documents:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    if (isLoading) {
+        return (
+            <Loader />
+        )
+    }
     return (
         <>
             <View style={styles.itemContainer}>
@@ -74,7 +111,7 @@ const IssuedDocItem: React.FC<any> = ({ item, fetchData }) => {
                             <MaterialCommunityIcons name={'dots-vertical'} size={30} color={palette.black} />
                         </TouchableOpacity>}>
                         <Menu.Item onPress={() => { shereDocomentHandler() }} title="Share" />
-                        <Menu.Item onPress={() => { viewDocHandler() }} title="View" />
+                        <Menu.Item onPress={() => { getLinkViewHandler() }} title="View" />
                         <Menu.Item onPress={() => { }} title="Download" />
                         {/* <Divider /> */}
                         <Menu.Item onPress={() => { deleteDocomentHandler() }} title="Delete" />

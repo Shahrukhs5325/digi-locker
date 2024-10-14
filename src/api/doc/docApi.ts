@@ -41,3 +41,8 @@ export const verifyDoctype = async (payload: any) => {
     const response = await axios.post(`/verify-doctype`, payload);
     return response;
 };
+
+export const getDocViewLink = async (payload: any) => {
+    const response = await axios.post(`/get-view-link-of-upload-files`, payload);
+    return response;
+};
