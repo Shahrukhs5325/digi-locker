@@ -10,6 +10,7 @@ import { Menu, Text } from "react-native-paper";
 import BottomSheet from "../bottomsheet/BottomSheet";
 import ShareDeleteDoc from "../shere/ShareDeleteDoc";
 import { getSharedViewLink } from "../../api/doc/docApi";
+import Loader from "../loader/Loader";
 
 
 const SharedDocItem: React.FC<any> = ({ item, fetchData }) => {
@@ -59,13 +60,17 @@ const SharedDocItem: React.FC<any> = ({ item, fetchData }) => {
         }
     };
 
-
+    if (isLoading) {
+        return (
+            <Loader />
+        )
+    }
     return (
         <>
             <View style={styles.itemContainer}>
                 <View style={{ width: '80%', }}>
-                    <Text style={styles.txtCatSty} numberOfLines={2}>{item.fileName}</Text>
-                    <Text style={styles.txtTitleSty}>{item.docType}</Text>
+                    <Text style={styles.txtTitleSty} numberOfLines={2}>{item.fileName}</Text>
+                    <Text style={styles.txtCatSty}>{item.senderEmail}</Text>
                     <Text style={styles.txtCatSty}>{moment(item.createdDate).format("DD-MMM-YYYY hh:mm a")}</Text>
                 </View>
 
@@ -78,8 +83,8 @@ const SharedDocItem: React.FC<any> = ({ item, fetchData }) => {
                         anchor={<TouchableOpacity onPress={() => openMenu()}>
                             <MaterialCommunityIcons name={'dots-vertical'} size={30} color={palette.black} />
                         </TouchableOpacity>}>
-                        <Menu.Item onPress={() => { getLinkViewHandler() }} title="View" />
-                        <Menu.Item onPress={() => { getLinkDownloadHandler() }} title="Download" />
+                        {item?.isViewAccess ? <Menu.Item onPress={() => { getLinkViewHandler() }} title="View" /> : null}
+                        {item?.isDownloadAccess ? <Menu.Item onPress={() => { getLinkDownloadHandler() }} title="Download" /> : null}
                         {/* <Menu.Item onPress={() => { deleteShereDocomentHandler() }} title="Delete" /> */}
                     </Menu>
                 </>
