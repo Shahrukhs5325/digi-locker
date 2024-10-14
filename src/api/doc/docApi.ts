@@ -32,7 +32,12 @@ export const deleteSharedDocApi = async (payload: any) => {
 };
 
 
-export const getSharedViewLink= async (payload: any) => {
+export const getSharedViewLink = async (payload: any) => {
     const response = await axios.post(`/get-view-link`, payload);
+    return response;
+};
+
+export const verifyDoctype = async (payload: any) => {
+    const response = await axios.post(`/verify-doctype`, payload);
     return response;
 };

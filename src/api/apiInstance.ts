@@ -22,17 +22,17 @@ const instance = axios.create({
 instance.interceptors.request.use(
     async (config) => {
         const lang = await AsyncStorage.getItem('language');
+        const token = await currentSession();
 
         config.headers.Accept = "application/json";
         config.headers['Content-Type'] = 'application/json';
         config.headers['Accept-Language'] = lang;
-        const token = await currentSession();
-
+ 
         if (token) {
             config.headers.Authorization = `Bearer ${token?.accessToken?.jwtToken}`;
         }
 
-         console.log("\n\n\n** url **\n",(API_URL+config?.url))
+        console.log("\n\n\n** url **\n", (API_URL + config?.url))
         // console.log("\n\n\n** token **\n",(token?.accessToken?.jwtToken))
         return config;
     },
