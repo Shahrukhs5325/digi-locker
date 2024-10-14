@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
 import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
@@ -18,6 +18,7 @@ const SharedScreen: React.FC<Props> = () => {
   const navigation = useNavigation();
   const userContext = React.useContext(UserContext);
   const refRBSheet = useRef();
+  const focus = useIsFocused();
 
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -28,12 +29,18 @@ const SharedScreen: React.FC<Props> = () => {
     fetchData();
   }, []);
 
+  React.useEffect(() => {
+    focus && fetchData();
+  }, [focus]);
+
   const fetchData = async () => {
     setIsLoading(true);
     try {
       const payload = { shareEmail: userContext.user };
+
       const response = await getSharedDocApi(payload);
-      setDocuments(response.data);
+
+      setDocuments(response.data?.sharedFiles);
     } catch (error) {
       console.error('Error fetching documents:', error);
     } finally {

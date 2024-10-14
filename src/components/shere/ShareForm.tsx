@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { getSharedDocApi } from '../../api/doc/docApi';
+import { getSharedDocApi, postSharedDocApi } from '../../api/doc/docApi';
 import TextInputCust from '../textInput/TextInput';
 import { Button, Checkbox, Text } from 'react-native-paper';
 import { palette } from '../../theme/themes';
@@ -19,7 +19,7 @@ const ShareForm: React.FC<Props> = ({ item }) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [formData, setFormData] = React.useState({
     shareName: "John Doe",
-    shareEmail: "test5@yopmail.com.com",
+    shareEmail: "test5@yopmail.com",
     validUptoDate: new Date(),
     isDownloadAccess: true,
     isViewAccess: true,
@@ -43,7 +43,7 @@ const ShareForm: React.FC<Props> = ({ item }) => {
 
       console.log(payload);
 
-      const res = await getSharedDocApi(payload);
+      const res = await postSharedDocApi(payload);
       console.log(res?.data);
 
     } catch (error) {

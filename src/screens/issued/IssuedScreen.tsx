@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import React, { useRef } from 'react';
 import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
@@ -18,6 +18,7 @@ const IssuedScreen: React.FC<Props> = () => {
   const navigation = useNavigation();
   const userContext = React.useContext(UserContext);
   const refRBSheet = useRef();
+  const focus = useIsFocused();
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [documents, setDocuments] = React.useState([]);
@@ -27,6 +28,10 @@ const IssuedScreen: React.FC<Props> = () => {
   React.useEffect(() => {
     fetchData();
   }, []);
+
+  React.useEffect(() => {
+    focus && fetchData();
+  }, [focus]);
 
   const fetchData = async () => {
     setIsLoading(true);
