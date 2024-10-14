@@ -44,19 +44,32 @@ const AccountScreen: React.FC<Props> = () => {
 
           <View style={{ gap: 20, marginVertical: 18 }}>
 
-            <View style={styles.itemContainer}>
-              <View style={styles.iconView}>
-                <Feather name={'user'} size={22} color={palette.primaryDark} />
+            <TouchableOpacity>
+              <View style={styles.itemContainer}>
+                <View style={styles.iconView}>
+                  <Feather name={'user'} size={22} color={palette.primaryDark} />
+                </View>
+                <Text style={styles.txtTitleSty}>My Profile</Text>
               </View>
-              <Text style={styles.txtTitleSty}>My Profile</Text>
-            </View>
+            </TouchableOpacity>
 
-            <View style={styles.itemContainer}>
-              <View style={styles.iconView}>
-                <Feather name={'activity'} size={22} color={palette.primaryDark} />
+            <TouchableOpacity>
+              <View style={styles.itemContainer}>
+                <View style={styles.iconView}>
+                  <Feather name={'external-link'} size={22} color={palette.primaryDark} />
+                </View>
+                <Text style={styles.txtTitleSty}>Shared Activity</Text>
               </View>
-              <Text style={styles.txtTitleSty}>My Activity</Text>
-            </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <View style={styles.itemContainer}>
+                <View style={styles.iconView}>
+                  <Feather name={'activity'} size={22} color={palette.primaryDark} />
+                </View>
+                <Text style={styles.txtTitleSty}>My Activity</Text>
+              </View>
+            </TouchableOpacity>
 
             <View style={styles.itemContainer}>
               <View style={styles.iconView}>
@@ -100,7 +113,7 @@ export default AccountScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     margin: 16,
   },
   iconView: {

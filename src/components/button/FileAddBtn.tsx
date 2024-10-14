@@ -28,6 +28,8 @@ const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet, fetchData }) => {
 
     const [isLoading, setIsLoading] = React.useState(false);
     const [file, setFile] = React.useState<any>(null); // Adjusted type
+    const [base64File, setBase64File] = React.useState<any>(null); // Adjusted type
+
     const [field, setField] = React.useState<string>('');
 
     const [visibleSnackBar, setVisibleSnackBar] = React.useState(false);
@@ -40,7 +42,7 @@ const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet, fetchData }) => {
         try {
             setIsLoading(true);
             const payload = {
-                file: 'pdf',
+                file: base64File,
                 userEmail: userContext.user,
                 fileName: file.name,
                 docType: field,
@@ -88,7 +90,7 @@ const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet, fetchData }) => {
                         /> */}
                         <Button mode="outlined" style={{}}
                             disabled={isLoading}
-                            onPress={() => uploadFileOnPressHandler(setFile)}>
+                            onPress={() => uploadFileOnPressHandler(setFile, setBase64File)}>
                             {file?.name ? "Change file" : "Select file"}
                         </Button>
 
