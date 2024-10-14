@@ -15,17 +15,20 @@ interface Props {
 
 const ShareForm: React.FC<Props> = ({ item }) => {
   const userContext = React.useContext(UserContext);
+  const todayDate = new Date()
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [formData, setFormData] = React.useState({
     shareName: "John Doe",
     shareEmail: "test5@yopmail.com",
-    validUptoDate: new Date(),
+    validUptoDate: new Date(new Date(todayDate).setDate(todayDate.getDate() + 3)),
     isDownloadAccess: true,
     isViewAccess: true,
   });
   const [errors, setErrors] = React.useState("");
   const [open, setOpen] = React.useState(false)
+
+
 
   const shereDocomentHandler = async () => {
 

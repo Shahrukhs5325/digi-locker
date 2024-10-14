@@ -6,9 +6,9 @@ import SplashScreen from "../../screens/splashScreen/SplashScreen";
 import { palette } from "../../theme/themes";
 import LoginScreen from "../../screens/auth/LoginScreen";
 import RegisterScreen from "../../screens/auth/RegisterScreen";
-import HomeScreen from "../../screens/home/HomeScreen";
 import { RenderTabNavigation } from "../TabNavigation";
 import PdfViewScreen from "../../screens/pdfView/PdfViewScreen";
+import SharedActivityScreen from "../../screens/shared/SharedActivityScreen";
 
 
 const Stack = createStackNavigator();
@@ -46,9 +46,13 @@ const Navigation = () => {
           name={"HomeScreen"}
           component={RenderTabNavigation}
         />
-         <Stack.Screen
+        <Stack.Screen
           name={"PdfViewScreen"}
           component={PdfViewScreen}
+        />
+        <Stack.Screen
+          name={"SharedActivityScreen"}
+          component={SharedActivityScreen}
         />
 
 

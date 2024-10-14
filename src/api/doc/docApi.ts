@@ -20,6 +20,11 @@ export const getSharedDocApi = async (payload: any) => {
     return response;
 };
 
+export const getSharedDocActivityApi = async (payload: any) => {
+    const response = await axios.post(`/get-my-share-docs-history`, payload);
+    return response;
+};
+
 export const deleteDocApi = async (payload: any) => {
     const response = await axios.post(`/delete-doc`, payload);
     return response;

@@ -53,7 +53,7 @@ const AccountScreen: React.FC<Props> = () => {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('SharedActivityScreen')}>
               <View style={styles.itemContainer}>
                 <View style={styles.iconView}>
                   <Feather name={'external-link'} size={22} color={palette.primaryDark} />
