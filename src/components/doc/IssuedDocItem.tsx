@@ -83,7 +83,7 @@ const IssuedDocItem: React.FC<any> = ({ item, fetchData }) => {
 
             </View>
             <BottomSheet refRBSheet={refRBSheet} height={540}>
-                <ShareForm />
+                <ShareForm item={item}/>
             </BottomSheet>
         </>
 

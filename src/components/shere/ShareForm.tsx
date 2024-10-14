@@ -1,15 +1,16 @@
 import React from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { getSharedDocApi } from '../../api/doc/docApi';
 import TextInputCust from '../textInput/TextInput';
-import { Button, Checkbox } from 'react-native-paper';
+import { Button, Checkbox, Text } from 'react-native-paper';
 import { palette } from '../../theme/themes';
 import { FONT } from '../../theme/fonts';
 import { UserContext } from '../../context/user/UserContext';
+import DatePicker from 'react-native-date-picker'
+import moment from 'moment';
 
 interface Props {
-  navbar?: boolean | undefined;
-  isCross?: boolean | undefined;
+  item: any;
 }
 
 const ShareForm: React.FC<Props> = ({ item }) => {
@@ -19,27 +20,29 @@ const ShareForm: React.FC<Props> = ({ item }) => {
   const [formData, setFormData] = React.useState({
     shareName: "John Doe",
     shareEmail: "test5@yopmail.com.com",
-    validUptoDate: "2024-10-16",
+    validUptoDate: new Date(),
     isDownloadAccess: true,
     isViewAccess: true,
   });
   const [errors, setErrors] = React.useState("");
+  const [open, setOpen] = React.useState(false)
 
   const shereDocomentHandler = async () => {
 
     setIsLoading(true);
     try {
-      const payload = [
-        {
-          "validUptoDate": formData.validUptoDate,
-          "shareName": formData.shareName,
-          "shareEmail": formData.shareEmail,
-          "isDownloadAccess": formData.isDownloadAccess,
-          "isViewAccess": formData.isViewAccess,
-          "senderEmail": userContext?.user,
-          "uuid": item?.uuid
-        }
-      ];
+      const payload = {
+        "validUptoDate": moment(formData.validUptoDate).format("YYYY-MM-DD"),
+        "shareName": formData.shareName,
+        "shareEmail": formData.shareEmail,
+        "isDownloadAccess": formData.isDownloadAccess,
+        "isViewAccess": formData.isViewAccess,
+        "senderEmail": userContext?.user,
+        "uuid": item?.uuid
+      }
+
+      console.log(payload);
+
       const res = await getSharedDocApi(payload);
       console.log(res?.data);
 
@@ -49,6 +52,7 @@ const ShareForm: React.FC<Props> = ({ item }) => {
       setIsLoading(false);
     }
   };
+
 
   return (
     <View style={styles.containerLoader}>
@@ -89,8 +93,32 @@ const ShareForm: React.FC<Props> = ({ item }) => {
             position='trailing'
           />
 
-          <View style={{}}>
+          <View style={styles.dateView}>
+            <Text style={[styles.txtTextTitle, { marginHorizontal: 14 }]}>{formData.validUptoDate ? "Change Valid Upto Date:" : "Select Valid Upto Date:"}</Text>
+            <TouchableOpacity onPress={() => setOpen(true)}>
+              <Text style={[styles.txtTextTitle, { textDecorationLine: "underline" }]}>{moment(formData.validUptoDate).format("DD-MMM-YYYY")}</Text>
+            </TouchableOpacity>
+          </View>
+
+          <DatePicker
+            modal
+            open={open}
+            date={formData.validUptoDate}
+            minimumDate={new Date()}
+            mode='date'
+            onConfirm={(date) => {
+              setFormData({ ...formData, validUptoDate: date });
+              setErrors("");
+              setOpen(false)
+            }}
+            onCancel={() => {
+              setOpen(false)
+            }}
+          />
+
+          <View style={{ marginVertical: 16 }}>
             <Button mode="outlined" style={{}}
+              loading={isLoading}
               disabled={isLoading}
               onPress={() => shereDocomentHandler()}>
               Share File
@@ -117,4 +145,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '400'
   },
+  dateView: {
+    flexDirection: 'row',
+    alignContent: 'center'
+  }
 });
