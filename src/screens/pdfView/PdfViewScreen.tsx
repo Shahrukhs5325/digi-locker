@@ -17,7 +17,8 @@ const PdfViewScreen: React.FC = ({ route }) => {
       <Pdf
         trustAllCerts={false}
         source={{
-          uri: 'https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf',
+          uri:doc?.fileDownloadLink,
+          // uri: 'https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf',
           cache: true,
         }}
         onLoadComplete={(numberOfPages, filePath) => {

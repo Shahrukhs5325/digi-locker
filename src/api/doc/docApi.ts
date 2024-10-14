@@ -11,7 +11,7 @@ export const getDocApi = async (payload: any) => {
 };
 
 export const getSharedDocApi = async (payload: any) => {
-    const response = await axios.post(`get-share-docs`, payload);
+    const response = await axios.post(`/share-doc`, payload);
     return response;
 };
 

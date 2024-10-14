@@ -10,7 +10,7 @@ export const uploadFileOnPressHandler = async (setFile: (file: any) => void) => 
     setFile(pickedFile);
 
     await RNFS.readFile(pickedFile.uri, 'base64').then(data => {
-      console.log('base64', data);
+      // console.log('base64', data);
     });
   } catch (err) {
     if (DocumentPicker.isCancel(err)) {

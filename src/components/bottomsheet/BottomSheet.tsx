@@ -4,16 +4,16 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 interface Props {
     children?: React.ReactNode | any;
     refRBSheet: any;
- }
+    height?: number;
+}
 
-const BottomSheet: React.FC<Props> = ({ refRBSheet, children }) => {
-
- 
+const BottomSheet: React.FC<Props> = ({ refRBSheet, children, height }) => {
 
 
     return (
         <RBSheet
-            height={300}
+            height={height ? height : 300}
+
             useNativeDriver={false}
             ref={refRBSheet}
             draggable={true}

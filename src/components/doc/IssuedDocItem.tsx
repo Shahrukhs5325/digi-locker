@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useRef } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { UserContext } from "../../context/user/UserContext";
 import { palette } from "../../theme/themes";
-import { Divider, Menu, Text } from "react-native-paper";
+import { Menu, Text } from "react-native-paper";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from "moment";
 import { deleteDocApi } from "../../api/doc/docApi";
 import { useNavigation } from "@react-navigation/native";
 import Octicons from 'react-native-vector-icons/Octicons';
+import BottomSheet from "../bottomsheet/BottomSheet";
+import ShareForm from "../shere/ShareForm";
 
 
 const IssuedDocItem: React.FC<any> = ({ item, fetchData }) => {
     const userContext = React.useContext(UserContext);
     const navigation = useNavigation();
+    const refRBSheet = useRef();
 
     const [visible, setVisible] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
@@ -41,38 +44,48 @@ const IssuedDocItem: React.FC<any> = ({ item, fetchData }) => {
         }
     };
 
+
+    const shereDocomentHandler = () => {
+        closeMenu();
+        refRBSheet.current.open();
+    };
+
     const viewDocHandler = () => {
         closeMenu();
         navigation.navigate('PdfViewScreen', { doc: item });
     }
 
     return (
-        <View style={styles.itemContainer}>
-            <View style={{ width: '80%', }}>
-                <Text style={styles.txtCatSty} numberOfLines={2}>{item.fileName}</Text>
-                <Text style={styles.txtTitleSty}>{item.docType}</Text>
-                <Text style={styles.txtCatSty}>{moment(item.createdDate).format("DD-MMM-YYYY hh:mm a")}</Text>
+        <>
+            <View style={styles.itemContainer}>
+                <View style={{ width: '80%', }}>
+                    <Text style={styles.txtCatSty} numberOfLines={2}>{item.fileName}</Text>
+                    <Text style={styles.txtTitleSty}>{item.docType}</Text>
+                    <Text style={styles.txtCatSty}>{moment(item.createdDate).format("DD-MMM-YYYY hh:mm a")}</Text>
+                </View>
+
+                <>
+                    {item?.verificationStatus ?
+                        <Octicons name={"verified"} size={24} color={"green"} /> : null}
+                    <Menu
+                        visible={visible}
+                        onDismiss={closeMenu}
+                        anchor={<TouchableOpacity onPress={() => openMenu()}>
+                            <MaterialCommunityIcons name={'dots-vertical'} size={30} color={palette.black} />
+                        </TouchableOpacity>}>
+                        <Menu.Item onPress={() => { shereDocomentHandler() }} title="Share" />
+                        <Menu.Item onPress={() => { viewDocHandler() }} title="View" />
+                        <Menu.Item onPress={() => { }} title="Download" />
+                        {/* <Divider /> */}
+                        <Menu.Item onPress={() => { deleteDocomentHandler() }} title="Delete" />
+                    </Menu>
+                </>
+
             </View>
-
-            <>
-                {item?.verificationStatus ?
-                    <Octicons name={"verified"} size={24} color={"green"} /> : null}
-                <Menu
-                    visible={visible}
-                    onDismiss={closeMenu}
-                    anchor={<TouchableOpacity onPress={() => openMenu()}>
-                        <MaterialCommunityIcons name={'dots-vertical'} size={30} color={palette.black} />
-                    </TouchableOpacity>}>
-                    <Menu.Item onPress={() => { }} title="Share" />
-                    <Menu.Item onPress={() => { viewDocHandler() }} title="View" />
-                    <Menu.Item onPress={() => { }} title="Download" />
-                    {/* <Divider /> */}
-                    <Menu.Item onPress={() => { deleteDocomentHandler() }} title="Delete" />
-                </Menu>
-            </>
-
-        </View>
-
+            <BottomSheet refRBSheet={refRBSheet} height={540}>
+                <ShareForm />
+            </BottomSheet>
+        </>
 
     );
 };
