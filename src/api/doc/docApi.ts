@@ -30,3 +30,9 @@ export const deleteSharedDocApi = async (payload: any) => {
     const response = await axios.post(`/delete-shared-docs`, payload);
     return response;
 };
+
+
+export const getSharedViewLink= async (payload: any) => {
+    const response = await axios.post(`/get-view-link`, payload);
+    return response;
+};
