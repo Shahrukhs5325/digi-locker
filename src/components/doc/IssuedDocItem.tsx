@@ -59,8 +59,8 @@ const IssuedDocItem: React.FC<any> = ({ item, fetchData }) => {
         <>
             <View style={styles.itemContainer}>
                 <View style={{ width: '80%', }}>
-                    <Text style={styles.txtCatSty} numberOfLines={2}>{item.fileName}</Text>
-                    <Text style={styles.txtTitleSty}>{item.docType}</Text>
+                    <Text style={styles.txtTitleSty} numberOfLines={2}>{item.fileName}</Text>
+                    <Text style={styles.txtCatSty}>{item?.sharedStatus ? "Shared" : "Not Shared"}</Text>
                     <Text style={styles.txtCatSty}>{moment(item.createdDate).format("DD-MMM-YYYY hh:mm a")}</Text>
                 </View>
 
@@ -83,7 +83,7 @@ const IssuedDocItem: React.FC<any> = ({ item, fetchData }) => {
 
             </View>
             <BottomSheet refRBSheet={refRBSheet} height={540}>
-                <ShareForm item={item}/>
+                <ShareForm item={item} />
             </BottomSheet>
         </>
 

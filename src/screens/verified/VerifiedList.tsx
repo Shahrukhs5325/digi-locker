@@ -32,7 +32,7 @@ const VerifiedList: React.FC<Props> = () => {
 
   React.useEffect(() => {
     fetchData();
-  }, []);
+  }, [userContext]);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -67,8 +67,9 @@ const VerifiedList: React.FC<Props> = () => {
             renderItem={({ item }) =>
               <View style={styles.itemContainer}>
                 <View >
-                  <Text style={styles.txtCatSty} numberOfLines={2}>{item?.fileName}</Text>
-                  <Text style={styles.txtTitleSty}>{item?.docType}</Text>
+                  {console.log(item)}
+                  <Text style={styles.txtTitleSty} numberOfLines={2}>{item?.fileName}</Text>
+                  <Text style={styles.txtCatSty}>{item?.sharedStatus ? "Shared" : "Not Shared"}</Text>
                   <Text style={styles.txtCatSty}>{moment(item?.createdDate).format("DD-MMM-YYYY hh:mm a")}</Text>
                 </View>
               </View>
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
   },
   txtTitleSty: {
     fontFamily: FONT.Able.regular,
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: '700',
     color: palette.black,
     letterSpacing: 2,
