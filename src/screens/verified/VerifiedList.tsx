@@ -67,7 +67,6 @@ const VerifiedList: React.FC<Props> = () => {
             renderItem={({ item }) =>
               <View style={styles.itemContainer}>
                 <View >
-                  {console.log(item)}
                   <Text style={styles.txtTitleSty} numberOfLines={2}>{item?.fileName}</Text>
                   <Text style={styles.txtCatSty}>{item?.sharedStatus ? "Shared" : "Not Shared"}</Text>
                   <Text style={styles.txtCatSty}>{moment(item?.createdDate).format("DD-MMM-YYYY hh:mm a")}</Text>

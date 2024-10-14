@@ -4,10 +4,13 @@ import { Button, FAB, Snackbar } from "react-native-paper";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import BottomSheet from "../bottomsheet/BottomSheet";
 import { useNavigation } from "@react-navigation/native";
-import { uploadDocApi } from "../../api/doc/docApi";
-import { Dropdown } from "react-native-paper-dropdown";
+import { uploadDocApi, verifyDoctype } from "../../api/doc/docApi";
 import { uploadFileOnPressHandler } from "../../util/util";
 import { UserContext } from "../../context/user/UserContext";
+import SelectDropdown from 'react-native-select-dropdown';
+import Feather from 'react-native-vector-icons/Feather';
+import PrimaryButton from "./PrimaryButton";
+
 
 type FileAddBtnProps = {
     refRBSheet: any;
@@ -16,7 +19,7 @@ type FileAddBtnProps = {
 
 const OPTIONS = [
     { label: 'Passport', value: 'Passport', color: 'blue' },
-    { label: 'Driving License', value: 'Driving License', color: 'blue' },
+    { label: 'Driving Licence', value: 'Driving Licence', color: 'blue' },
     { label: 'Global ID', value: 'Global ID', color: 'blue' },
 ];
 
@@ -31,6 +34,8 @@ const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet, fetchData }) => {
     const [base64File, setBase64File] = React.useState<any>(null); // Adjusted type
 
     const [field, setField] = React.useState<string>('');
+    const [error, setError] = React.useState<string>('');
+
 
     const [visibleSnackBar, setVisibleSnackBar] = React.useState(false);
 
@@ -38,14 +43,41 @@ const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet, fetchData }) => {
 
     const onDismissSnackBar = () => setVisibleSnackBar(false);
 
-    const uploadDoc = async () => {
+    const docVerifyHandler = async () => {
+        if (!field) {
+            setError("Select document type");
+            return
+        } else if (!file) {
+            setError("Select file");
+            return
+        }
+        try {
+            setIsLoading(true);
+            const payload = {
+                fileBase64: base64File,
+                docType: field?.value,
+            };
+
+            const res = await verifyDoctype(payload);
+            if (res.status == 200) {
+                console.log(res?.data?.docType);
+                await uploadDoc(field?.value);
+            }
+        } catch (error) {
+            uploadDoc("");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const uploadDoc = async (type: string) => {
         try {
             setIsLoading(true);
             const payload = {
                 file: base64File,
                 userEmail: userContext.user,
                 fileName: file.name,
-                docType: field,
+                docType: type,
             };
 
             const res = await uploadDocApi(payload);
@@ -75,7 +107,7 @@ const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet, fetchData }) => {
                 rippleColor={palette.bgCard}
                 onPress={() => refRBSheet.current.open()}
             />
-            <BottomSheet refRBSheet={refRBSheet}>
+            <BottomSheet refRBSheet={refRBSheet} height={440}>
 
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.container}>
@@ -88,18 +120,71 @@ const FileAddBtn: React.FC<FileAddBtnProps> = ({ refRBSheet, fetchData }) => {
                             onSelect={setField}
                             menuContentStyle={styles.dropdown}
                         /> */}
+                        <SelectDropdown
+                            data={OPTIONS}
+                            onSelect={(selectedItem) => {
+                                setField(selectedItem);
+                                setError("");
+                            }}
+                            renderButton={(selectedItem) => {
+                                return (
+                                    <View style={styles.dropdownButtonStyle}>
+                                        {field ? (
+                                            <Text style={styles.txtSty}>
+                                                {selectedItem
+                                                    ? `${selectedItem?.label}  `
+                                                    : "Select type"}
+                                            </Text>
+                                        ) : (
+                                            <Text style={styles.txtSty}>
+                                                {selectedItem
+                                                    ? `${selectedItem?.label}`
+                                                    : "Select type"}
+                                            </Text>
+                                        )}
+                                        <Feather name={'chevron-down'} size={22} />
+
+                                    </View>
+                                );
+                            }}
+                            renderItem={(item, index, isSelected) => {
+                                return (
+                                    <View
+                                        key={index}
+                                        style={{
+                                            ...styles.dropdownItemStyle,
+                                            ...(isSelected && {
+                                                backgroundColor: palette.primaryLight,
+                                            }),
+                                        }}>
+                                        {field ? (
+                                            <Text style={styles.txtSty}>
+                                                {`${item?.label}`}
+                                            </Text>
+                                        ) : (
+                                            <Text style={styles.txtSty}>
+                                                {`${item?.label}`}
+                                            </Text>
+                                        )}
+                                    </View>
+                                );
+                            }}
+                            showsVerticalScrollIndicator={false}
+                            dropdownStyle={styles.dropdownMenuStyle}
+                        />
+
                         <Button mode="outlined" style={{}}
                             disabled={isLoading}
-                            onPress={() => uploadFileOnPressHandler(setFile, setBase64File)}>
+                            onPress={() => { uploadFileOnPressHandler(setFile, setBase64File); setError(""); }}>
                             {file?.name ? "Change file" : "Select file"}
                         </Button>
 
-                        {file?.name ? <Button mode="outlined" style={{}}
-                            loading={isLoading}
-                            onPress={uploadDoc}>
-                            Upload File
-                        </Button> : null}
+                        <Text style={styles.errTxt}>{error}</Text>
 
+
+                        {file?.name ? <PrimaryButton loading={isLoading} onPress={() => docVerifyHandler()} >
+                            Upload File
+                        </PrimaryButton> : null}
 
                     </View>
                 </ScrollView>
@@ -138,6 +223,11 @@ const styles = StyleSheet.create({
         margin: 16,
         gap: 16
     },
+    errTxt: {
+        fontSize: 13,
+        fontWeight: '400',
+        color: 'red',
+    },
     txtTitleSty: {
         fontSize: 18,
         fontWeight: '700',
@@ -157,6 +247,54 @@ const styles = StyleSheet.create({
     },
     dropdown: {
         backgroundColor: '#dcdcd2',
+    },
+    txtSty: {
+
+    },
+    dropdownButtonStyle: {
+        width: "100%",
+        height: 50,
+        backgroundColor: '#E9ECEF',
+        borderRadius: 4,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 12,
+    },
+    dropdownButtonTxtStyle: {
+        flex: 1,
+        fontSize: 18,
+        fontWeight: '500',
+        color: '#151E26',
+    },
+    dropdownButtonArrowStyle: {
+        fontSize: 28,
+    },
+    dropdownButtonIconStyle: {
+        fontSize: 28,
+        marginRight: 8,
+    },
+    dropdownMenuStyle: {
+        backgroundColor: '#FFF',
+        borderRadius: 4,
+    },
+    dropdownItemStyle: {
+        width: '100%',
+        flexDirection: 'row',
+        paddingHorizontal: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 8,
+    },
+    dropdownItemTxtStyle: {
+        flex: 1,
+        fontSize: 18,
+        fontWeight: '500',
+        color: '#151E26',
+    },
+    dropdownItemIconStyle: {
+        fontSize: 28,
+        marginRight: 8,
     },
 
 
