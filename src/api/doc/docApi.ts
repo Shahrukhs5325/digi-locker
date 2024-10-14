@@ -19,3 +19,9 @@ export const deleteDocApi = async (payload: any) => {
     const response = await axios.post(`/delete-doc`, payload);
     return response;
 };
+
+
+export const deleteSharedDocApi = async (payload: any) => {
+    const response = await axios.post(`/delete-shared-docs`, payload);
+    return response;
+};

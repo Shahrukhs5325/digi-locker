@@ -62,7 +62,7 @@ const SharedScreen: React.FC<Props> = () => {
               keyExtractor={(item, index) => index.toString()}
               data={documents}
               renderItem={({ item }) =>
-                <SharedDocItem item={item} />
+                <SharedDocItem item={item} fetchData={fetchData} />
               }
               style={styles.listContents}
               contentContainerStyle={styles.list}
@@ -73,7 +73,7 @@ const SharedScreen: React.FC<Props> = () => {
           </View>
 
         </ScrollView>
-        <FileAddBtn refRBSheet={refRBSheet} fetchData={fetchData}/>
+        <FileAddBtn refRBSheet={refRBSheet} fetchData={fetchData} />
       </View>
     </>
   );
