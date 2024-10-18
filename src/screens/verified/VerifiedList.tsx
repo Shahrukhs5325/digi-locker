@@ -10,6 +10,7 @@ import FileAddBtn from '../../components/button/FileAddBtn';
 import { getDocApi } from '../../api/doc/docApi';
 import Loader from '../../components/loader/Loader';
 import moment from 'moment';
+import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -92,18 +93,18 @@ export default VerifiedList;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    margin: 16,
+    backgroundColor: 'transparent',
   },
   itemContainer: {
+    backgroundColor:  palette.white,
     borderWidth: 1,
     borderColor: palette.black,
-    padding: 12,
+    padding: 18,
     borderRadius: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: WIDTH - 80
+    width: WIDTH - 120
   },
   txtTitleSty: {
     fontFamily: FONT.Able.regular,
